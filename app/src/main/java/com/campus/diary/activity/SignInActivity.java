@@ -12,9 +12,6 @@ import com.campus.diary.R;
 import com.campus.diary.mvp.contract.SignInContract;
 import com.campus.diary.mvp.presenter.SignInPresenter;
 
-import static com.droi.sdk.core.Core.getActivity;
-
-
 /**
  * Created by Allen.Zeng on 2016/12/15.
  */
@@ -45,7 +42,7 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
         gotoRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
+                SignInActivity.this.startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
             }
         });
         progressDialog = new ProgressDialog(SignInActivity.this);
@@ -65,7 +62,7 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 
     @Override
     public void showToast(String error) {
-        Toast.makeText(getActivity(),error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getApplicationContext(),error,Toast.LENGTH_SHORT).show();
     }
 
     @Override

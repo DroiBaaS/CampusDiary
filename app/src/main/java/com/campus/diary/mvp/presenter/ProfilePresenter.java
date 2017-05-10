@@ -6,21 +6,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Toast;
 
 import com.campus.diary.R;
 import com.campus.diary.model.User;
 import com.campus.diary.mvp.contract.ProfileContract;
-import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiFile;
 import com.droi.sdk.core.DroiPermission;
@@ -28,7 +23,6 @@ import com.droi.sdk.core.DroiUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.Map;
 
 import rx.Observable;
 import rx.Observer;
@@ -36,9 +30,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static android.R.attr.text;
 import static android.app.Activity.RESULT_OK;
-import static com.campus.diary.mvp.presenter.SignUpPresenter.signUp;
 
 /**
  * Created by Allen.Zeng on 2016/12/15.
@@ -47,7 +39,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     private ProfileContract.View view;
 
-    public ProfilePresenter(ProfileContract.View view){
+    public ProfilePresenter(ProfileContract.View view) {
         this.view = view;
     }
 
@@ -59,7 +51,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         }
         view.showLoading("修改头像中...");
         if (data != null) {
-            upload(context,data);
+            upload(context, data);
         } else {
             view.showToast("上传失败");
         }
@@ -82,29 +74,11 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
     @Override
     public void getHeadIcon() {
-        getHeadIconBitmap()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Bitmap>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(Bitmap bitmap) {
-                        if (bitmap != null) {
-                            view.refreshProfile(bitmap,DroiUser.getCurrentUser(User.class).getUserId());
-                        }
-                    }
-                });
+        view.refreshProfile();
     }
 
     @Override
-    public void updateNickname(final String name){
+    public void updateNickname(final String name) {
         view.showLoading("修改昵称中...");
         Observable.create(new Observable.OnSubscribe<DroiError>() {
             @Override
@@ -118,6 +92,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         }).subscribe(new Observer<DroiError>() {
             @Override
             public void onNext(DroiError droiError) {
+                if (view == null) {
+                    return;
+                }
                 if (droiError.isOk()) {
                     view.refreshNickname(name);
                     view.showToast("修改成功!");
@@ -128,17 +105,23 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
             @Override
             public void onCompleted() {
+                if (view == null) {
+                    return;
+                }
                 view.hideLoading();
             }
 
             @Override
             public void onError(Throwable e) {
+                if (view == null) {
+                    return;
+                }
                 view.showToast("网络错误");
             }
         });
     }
 
-    private void upload(Context context,Intent data) {
+    private void upload(Context context, Intent data) {
         Uri mImageCaptureUri = data.getData();
         if (mImageCaptureUri != null) {
             Bitmap image;
@@ -175,31 +158,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         }
     }
 
-    public Observable<Bitmap> getHeadIconBitmap() {
-        return Observable.create(new Observable.OnSubscribe<Bitmap>() {
-            @Override
-            public void call(final Subscriber<? super Bitmap> subscriber) {
-                try {
-                    Bitmap bitmap = null;
-                    User user = DroiUser.getCurrentUser(User.class);
-                    if (user != null && user.isAuthorized() && !user.isAnonymous()) {
-                        if (user.getHeadIcon() != null) {
-                            DroiError error = new DroiError();
-                            byte[] bytes = user.getHeadIcon().get(error);
-                            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        }
-                    }
-                    subscriber.onNext(bitmap);
-                } catch (Exception e) {
-                    subscriber.onError(e);
-                }finally{
-                    subscriber.onCompleted();
-                }
-            }
-        });
-    }
-
-    public void updateUserHeadIcon(final DroiFile file){
+    public void updateUserHeadIcon(final DroiFile file) {
         Observable.create(new Observable.OnSubscribe<DroiError>() {
             @Override
             public void call(Subscriber<? super DroiError> subscriber) {
@@ -216,6 +175,9 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         }).subscribe(new Observer<DroiError>() {
             @Override
             public void onNext(DroiError droiError) {
+                if (view == null) {
+                    return;
+                }
                 if (droiError.isOk()) {
                     view.showToast("上传成功!");
                     getHeadIcon();
@@ -226,20 +188,24 @@ public class ProfilePresenter implements ProfileContract.Presenter {
 
             @Override
             public void onCompleted() {
+                if (view == null) {
+                    return;
+                }
                 view.hideLoading();
             }
 
             @Override
             public void onError(Throwable e) {
+                if (view == null) {
+                    return;
+                }
                 view.showToast("网络错误");
             }
         });
     }
 
     private String getPath(final Context context, final Uri uri) {
-
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
@@ -247,18 +213,15 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
-
                 if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
             }
             // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
-
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
                 return getDataColumn(context, contentUri, null, null);
             }
             // MediaProvider
@@ -266,7 +229,6 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
                 final String type = split[0];
-
                 Uri contentUri = null;
                 if ("image".equals(type)) {
                     contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -275,29 +237,24 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 } else if ("audio".equals(type)) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
-
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[]{
                         split[1]
                 };
-
                 return getDataColumn(context, contentUri, selection, selectionArgs);
             }
         }
         // MediaStore (and general)
         else if ("content".equalsIgnoreCase(uri.getScheme())) {
-
             // Return the remote address
             if (isGooglePhotosUri(uri))
                 return uri.getLastPathSegment();
-
             return getDataColumn(context, uri, null, null);
         }
         // File
         else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();
         }
-
         return null;
     }
 
@@ -313,13 +270,11 @@ public class ProfilePresenter implements ProfileContract.Presenter {
      */
     private String getDataColumn(Context context, Uri uri, String selection,
                                  String[] selectionArgs) {
-
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {
                 column
         };
-
         try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
                     null);

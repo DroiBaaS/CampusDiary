@@ -13,12 +13,12 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/body" >
+        android:background="@drawable/body">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -26,7 +26,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/body_cont"
                 android:gravity="center_vertical"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/register_name"
@@ -36,11 +36,11 @@
                     android:background="#ffffff"
                     android:gravity="center_vertical"
                     android:hint="用户名（不少于6个字符）"
+                    android:maxLength="20"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:singleLine="true"
                     android:textColor="#000000"
-                    android:maxLength="20"
                     android:textSize="16dp" />
 
                 <View
@@ -75,12 +75,12 @@
                     android:background="#ffffff"
                     android:gravity="center_vertical"
                     android:hint="@string/login_password"
+                    android:maxLength="20"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:password="true"
                     android:singleLine="true"
                     android:textColor="#000000"
-                    android:maxLength="20"
                     android:textSize="16dp" />
 
                 <View
@@ -96,12 +96,12 @@
                     android:background="#ffffff"
                     android:gravity="center_vertical"
                     android:hint="@string/register_confirm"
+                    android:maxLength="20"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:password="true"
                     android:singleLine="true"
                     android:textColor="#000000"
-                    android:maxLength="20"
                     android:textSize="16dp" />
             </LinearLayout>
 
@@ -114,8 +114,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:padding="5dp"
-                android:visibility="gone" >
-            </LinearLayout>
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 

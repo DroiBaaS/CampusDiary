@@ -5,18 +5,12 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.3.1'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url "https://github.com/DroiBaaS/DroiBaaS-SDK-Android/raw/master/"
-        }
-        maven {
-            url "https://jitpack.io"
-        }
     }
 }

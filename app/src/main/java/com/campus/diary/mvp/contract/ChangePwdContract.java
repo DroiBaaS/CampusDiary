@@ -8,8 +8,7 @@ public interface ChangePwdContract {
     interface View extends BaseView {
     }
 
-    interface Presenter{
+    interface Presenter {
         void changePassword(String oldPassword, String newPassword, String newPasswordAgain);
-
     }
 }

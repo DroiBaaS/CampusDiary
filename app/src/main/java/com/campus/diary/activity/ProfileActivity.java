@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.campus.diary.R;
 import com.campus.diary.model.User;
 import com.campus.diary.mvp.contract.ProfileContract;
@@ -32,8 +34,8 @@ import com.droi.sdk.core.DroiUser;
 /**
  * Created by Allen.Zeng on 2016/12/15.
  */
-public class ProfileActivity extends BaseActivity implements ProfileContract.View,View.OnClickListener {
-    private TextView userNameText,changeNickTv;
+public class ProfileActivity extends BaseActivity implements ProfileContract.View, View.OnClickListener {
+    private TextView userNameText, changeNickTv;
     private ImageView headImageView;
     private View selectPic;
     private ProgressDialog progressDialog;
@@ -56,20 +58,18 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     private void initUI() {
         addTitle(R.string.profile);
         setBackButton();
-        progressDialog=new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         userNameText = (TextView) findViewById(R.id.user_id);
         changeNickTv = (TextView) findViewById(R.id.changenick);
         User user = DroiUser.getCurrentUser(User.class);
         if (user != null && user.isAuthorized() && !user.isAnonymous()) {
-            if(user.getNickName() != null)
-            changeNickTv.setText(user.getNickName());
+            if (user.getNickName() != null)
+                changeNickTv.setText(user.getNickName());
         }
-
         headImageView = (ImageView) findViewById(R.id.head_pic);
         findViewById(R.id.head).setOnClickListener(this);
         findViewById(R.id.profile_logout).setOnClickListener(this);
         findViewById(R.id.change_password).setOnClickListener(this);
-        findViewById(R.id.change_nickname).setOnClickListener(this);
         Button btn_take_photo = (Button) findViewById(R.id.btn_take_photo);
         Button btn_pick_photo = (Button) findViewById(R.id.btn_pick_photo);
         Button btn_cancel = (Button) findViewById(R.id.btn_cancel);
@@ -81,7 +81,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
 
     @Override
     public void onDestroy() {
-        if (progressDialog!=null){
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
         super.onDestroy();
@@ -125,11 +125,6 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
                     e.printStackTrace();
                 }
                 break;
-            case R.id.change_nickname:
-                FragmentManager manager = getSupportFragmentManager();
-                CustomDialogFragment dialogFragment = new CustomDialogFragment();
-                dialogFragment.show(manager, "custom");
-                break;
             case R.id.btn_cancel:
                 hidePopMenu();
                 break;
@@ -143,9 +138,15 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     }
 
     @Override
-    public void refreshProfile(Bitmap bitmap,String userName) {
-        headImageView.setImageBitmap(bitmap);
-        userNameText.setText(userName);
+    public void refreshProfile() {
+        User user = User.getCurrentUser(User.class);
+        if (!user.isAnonymous() && user.getHeadIcon() != null) {
+            Glide.with(this)
+                    .load(user.getHeadIcon().getUri())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(headImageView);
+        }
+        userNameText.setText(user.getUserId());
     }
 
     @Override
@@ -154,26 +155,25 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     }
 
     @Override
-    public void finishActivity(){
+    public void finishActivity() {
         finish();
-    };
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         hidePopMenu();
-        profileLogic.uploadHeadIcon(this,resultCode,data);
+        profileLogic.uploadHeadIcon(this, resultCode, data);
     }
 
     @Override
     public void showToast(String result) {
-        Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showToastByResID(int resId) {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
-
 
     @Override
     public void showLoading(String msg) {
@@ -194,7 +194,6 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         private ImageView iv_write_popup; //确认按钮
         private EditText et_comment_popup;//评论内容
         private LinearLayout ll_background_dialog;//容器
-
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -222,7 +221,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
             ll_background_dialog = (LinearLayout) view.findViewById(R.id.ll_background_dialog);
         }
 
-        private void initEvent(){
+        private void initEvent() {
             //取消
             iv_quxiao_popup.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -235,7 +234,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
                 @Override
                 public void onClick(View view) {
                     String name = et_comment_popup.getText().toString();
-                    if(TextUtils.isEmpty(name)){
+                    if (TextUtils.isEmpty(name)) {
                         showToast("昵称不能为空");
                         return;
                     }

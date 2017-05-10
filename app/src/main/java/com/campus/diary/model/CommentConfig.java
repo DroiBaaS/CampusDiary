@@ -4,12 +4,13 @@ package com.campus.diary.model;
  * Created by Allen.Zeng on 2016/12/15.
  */
 public class CommentConfig {
-    public static enum Type{
+    public enum Type {
         PUBLIC("public"),
         REPLY("reply");
 
         private String value;
-        private Type(String value){
+
+        Type(String value) {
             this.value = value;
         }
 
@@ -24,7 +25,7 @@ public class CommentConfig {
     @Override
     public String toString() {
         String replyUserStr = "";
-        if(replyUser != null){
+        if (replyUser != null) {
             replyUserStr = replyUser.toString();
         }
         return "circlePosition = " + circlePosition

@@ -12,9 +12,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.campus.diary.MyApplication;
 import com.campus.diary.R;
-import com.campus.diary.model.FavortItem;
+import com.campus.diary.model.FavorItem;
 import com.campus.diary.spannable.CircleMovementMethod;
 import com.campus.diary.spannable.SpannableClickable;
 
@@ -23,12 +22,11 @@ import java.util.List;
 /**
  * Created by Allen.Zeng on 2016/12/15.
  */
-public class PraiseListView extends TextView{
-
+public class PraiseListView extends android.support.v7.widget.AppCompatTextView {
 
     private int itemColor;
     private int itemSelectorColor;
-    private List<FavortItem> datas;
+    private List<FavorItem> datas;
     private OnItemClickListener onItemClickListener;
 
     public OnItemClickListener getOnItemClickListener() {
@@ -60,31 +58,32 @@ public class PraiseListView extends TextView{
             itemColor = typedArray.getColor(R.styleable.PraiseListView_item_color, getResources().getColor(R.color.praise_item_default));
             itemSelectorColor = typedArray.getColor(R.styleable.PraiseListView_item_selector_color, getResources().getColor(R.color.praise_item_selector_default));
 
-        }finally {
+        } finally {
             typedArray.recycle();
         }
     }
 
-    public List<FavortItem> getDatas() {
+    public List<FavorItem> getDatas() {
         return datas;
     }
-    public void setDatas(List<FavortItem> datas) {
+
+    public void setDatas(List<FavorItem> datas) {
         this.datas = datas;
         notifyDataSetChanged();
     }
 
 
-    public void notifyDataSetChanged(){
+    public void notifyDataSetChanged() {
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        if(datas != null && datas.size() > 0){
+        if (datas != null && datas.size() > 0) {
             //添加点赞图标
             builder.append(setImageSpan());
-            FavortItem item = null;
-            for (int i=0; i<datas.size(); i++){
+            FavorItem item;
+            for (int i = 0; i < datas.size(); i++) {
                 item = datas.get(i);
-                if(item != null){
+                if (item != null) {
                     builder.append(setClickableSpan(item.getUser().getNickName(), i));
-                    if(i != datas.size()-1){
+                    if (i != datas.size() - 1) {
                         builder.append(", ");
                     }
                 }
@@ -92,25 +91,25 @@ public class PraiseListView extends TextView{
         }
 
         setText(builder);
-        setMovementMethod(new CircleMovementMethod(itemSelectorColor));
+        setMovementMethod(new CircleMovementMethod(getContext(), itemSelectorColor));
     }
 
 
-    private SpannableString setImageSpan(){
+    private SpannableString setImageSpan() {
         String text = "  ";
         SpannableString imgSpanText = new SpannableString(text);
-        imgSpanText.setSpan(new ImageSpan(MyApplication.getContext(), R.drawable.icon_praise, DynamicDrawableSpan.ALIGN_BASELINE),
-                0 , 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        imgSpanText.setSpan(new ImageSpan(getContext(), R.drawable.icon_praise, DynamicDrawableSpan.ALIGN_BASELINE),
+                0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return imgSpanText;
     }
 
     @NonNull
     private SpannableString setClickableSpan(String textStr, final int position) {
         SpannableString subjectSpanText = new SpannableString(textStr);
-        subjectSpanText.setSpan(new SpannableClickable(itemColor){
+        subjectSpanText.setSpan(new SpannableClickable(itemColor) {
                                     @Override
                                     public void onClick(View widget) {
-                                        if(onItemClickListener!=null){
+                                        if (onItemClickListener != null) {
                                             onItemClickListener.onClick(position);
                                         }
                                     }
@@ -119,8 +118,7 @@ public class PraiseListView extends TextView{
         return subjectSpanText;
     }
 
-
-    public static interface OnItemClickListener{
-        public void onClick(int position);
+    public interface OnItemClickListener {
+        void onClick(int position);
     }
 }

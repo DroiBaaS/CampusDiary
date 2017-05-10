@@ -9,7 +9,7 @@ public interface SignInContract {
         void gotoMainActivity();
     }
 
-    interface Presenter{
+    interface Presenter {
         void authority(String userName, String password);
     }
 }

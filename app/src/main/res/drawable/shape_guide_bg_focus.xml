@@ -3,7 +3,8 @@
     android:shape="oval"
     android:useLevel="false">
 
-    <solid android:color="@android:color/white"/>
-    <size android:height="@dimen/gudieview_heigh"
-        android:width="@dimen/gudieview_width"/>
+    <solid android:color="@android:color/white" />
+    <size
+        android:width="@dimen/gudieview_width"
+        android:height="@dimen/gudieview_heigh" />
 </shape>

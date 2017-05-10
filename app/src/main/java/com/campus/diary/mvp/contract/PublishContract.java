@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface PublishContract {
 
-    interface View extends BaseView{
+    interface View extends BaseView {
         void gotoMainActivity();
     }
 
-    interface Presenter{
-        void sendData(List<ImageItem> items,String content);
+    interface Presenter {
+        void sendData(List<ImageItem> items, String content);
     }
 }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_gray" >
+    android:background="@color/bg_gray">
 
     <GridView
         android:id="@+id/gridview"
@@ -15,8 +14,7 @@
         android:horizontalSpacing="8dp"
         android:numColumns="3"
         android:scrollbars="none"
-        android:verticalSpacing="8dp" >
-    </GridView>
+        android:verticalSpacing="8dp" />
 
     <Button
         android:id="@+id/finish_btn"

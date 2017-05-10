@@ -8,10 +8,11 @@
     <include
         android:id="@+id/title_bar"
         layout="@layout/head_titlebar" />
+
     <LinearLayout
-        android:layout_below="@id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/title_bar"
         android:orientation="vertical">
 
         <EditText
@@ -22,8 +23,7 @@
             android:background="@color/white"
             android:freezesText="true"
             android:gravity="left|top"
-            android:hint="@string/publish_empty_text" >
-        </EditText>
+            android:hint="@string/publish_empty_text" />
 
         <GridView
             android:id="@+id/gridview"
@@ -34,8 +34,7 @@
             android:horizontalSpacing="3dp"
             android:numColumns="4"
             android:scrollbars="none"
-            android:verticalSpacing="5dp" >
-        </GridView>
+            android:verticalSpacing="5dp" />
     </LinearLayout>
 
     <include

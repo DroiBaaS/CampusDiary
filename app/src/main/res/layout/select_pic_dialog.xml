@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:background="#99232323"
     android:gravity="center_horizontal"
-    android:visibility="gone"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="gone">
 
     <LinearLayout
         android:id="@+id/pop_layout"

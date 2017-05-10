@@ -12,8 +12,6 @@ import com.campus.diary.R;
 import com.campus.diary.mvp.contract.ChangePwdContract;
 import com.campus.diary.mvp.presenter.ChangePwdPresenter;
 
-import static com.droi.sdk.core.Core.getActivity;
-
 /**
  * Created by Allen.Zeng on 2016/12/15.
  */
@@ -63,8 +61,6 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePwdCon
         pwdLogic.changePassword(oldPassword,newPassword,retypeNewPassword);
     }
 
-
-
     @Override
     public void showLoading(String msg) {
         progressDialog.setIndeterminate(true);
@@ -74,7 +70,7 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePwdCon
 
     @Override
     public void showToast(String result) {
-        Toast.makeText(getActivity(),result,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getApplicationContext(),result,Toast.LENGTH_SHORT).show();
     }
 
     @Override

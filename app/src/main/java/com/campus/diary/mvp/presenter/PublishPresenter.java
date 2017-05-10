@@ -1,8 +1,9 @@
 package com.campus.diary.mvp.presenter;
 
+import android.util.Log;
+
 import com.campus.diary.model.CircleItem;
 import com.campus.diary.model.ImageItem;
-import com.campus.diary.model.PhotoInfo;
 import com.campus.diary.model.User;
 import com.campus.diary.mvp.contract.PublishContract;
 import com.droi.sdk.DroiError;
@@ -28,33 +29,44 @@ import rx.schedulers.Schedulers;
 public class PublishPresenter implements PublishContract.Presenter {
 
     private PublishContract.View view;
-    public PublishPresenter(PublishContract.View view){
+
+    public PublishPresenter(PublishContract.View view) {
         this.view = view;
     }
 
-
     @Override
-    public void sendData(List<ImageItem> items,String content) {
+    public void sendData(List<ImageItem> items, String content) {
         view.showLoading("正在发送...");
-        if(content == null){
+        if (content == null) {
             content = "";
         }
-        createCircleItem(items,content)
+        createCircleItem(items, content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DroiError>() {
                     @Override
                     public void onCompleted() {
+                        if (view == null) {
+                            return;
+                        }
                         view.hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showToast("网络错误!" );
+                        if (view == null) {
+                            return;
+                        }
+                        view.showToast("网络错误!");
+                        Log.i("chenpei", e.toString());
+                        view.hideLoading();
                     }
 
                     @Override
                     public void onNext(DroiError droiError) {
+                        if (view == null) {
+                            return;
+                        }
                         if (droiError.isOk()) {
                             view.gotoMainActivity();
                         } else {
@@ -65,32 +77,26 @@ public class PublishPresenter implements PublishContract.Presenter {
     }
 
 
-    public static List<PhotoInfo> createPhotos(List<ImageItem> items) {
-            List<PhotoInfo> photos = new ArrayList<PhotoInfo>();
-            for(ImageItem item:items) {
-                DroiPermission permission = new DroiPermission();
-                permission.setPublicReadPermission(true);
-                permission.setPublicWritePermission(false);
-                DroiFile file = new DroiFile(new File(item.sourcePath));
-                file.setPermission(permission);
-                PhotoInfo p6 = new PhotoInfo();
-                p6.setIcon(file);
-                p6.setPermission(permission);
-                photos.add(p6);
-            }
-            return photos;
+    public static List<DroiFile> createPhotos(List<ImageItem> items) {
+        List<DroiFile> photos = new ArrayList<>();
+        for (ImageItem item : items) {
+            DroiPermission permission = new DroiPermission();
+            permission.setPublicReadPermission(true);
+            permission.setPublicWritePermission(false);
+            DroiFile file = new DroiFile(new File(item.sourcePath));
+            file.setPermission(permission);
+            photos.add(file);
+        }
+        return photos;
     }
 
-    public static Observable<DroiError> createCircleItem(final List<ImageItem> items,final String content) {
+    public static Observable<DroiError> createCircleItem(final List<ImageItem> items, final String content) {
         return Observable.create(new Observable.OnSubscribe<DroiError>() {
             @Override
             public void call(final Subscriber<? super DroiError> subscriber) {
                 try {
                     CircleItem data = new CircleItem();
                     data.setContent(content);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String dateStr = sdf.format(Core.getTimestamp());
-                    data.setCreateTime(dateStr);
                     data.setUser(User.getCurrentUser(User.class));
                     data.setType("2");
                     data.setPhotos(createPhotos(items));
@@ -102,7 +108,7 @@ public class PublishPresenter implements PublishContract.Presenter {
                     subscriber.onNext(droiError);
                 } catch (Exception e) {
                     subscriber.onError(e);
-                }finally{
+                } finally {
                     subscriber.onCompleted();
                 }
             }

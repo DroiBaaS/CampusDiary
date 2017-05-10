@@ -1,5 +1,7 @@
 package com.campus.diary.mvp.presenter;
 
+import android.util.Log;
+
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiPermission;
 import com.campus.diary.model.User;
@@ -20,7 +22,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
 
     private SignUpContract.View view;
 
-    public SignUpPresenter(SignUpContract.View view){
+    public SignUpPresenter(SignUpContract.View view) {
         this.view = view;
     }
 
@@ -33,16 +35,19 @@ public class SignUpPresenter implements SignUpContract.Presenter {
             checkResult = "用户名太短";
         } else if (inputInfo.length() > 30) {
             checkResult = "用户名太长";
-        }  else if (userInfoMap.get("mUserPassword1").toString().length() < 6) {
+        } else if (userInfoMap.get("mUserPassword1").toString().length() < 6) {
             checkResult = "密码太短";
         } else if (userInfoMap.get("mUserPassword1").toString().length() > 30) {
             checkResult = "密码太长";
         } else if (!userInfoMap.get("mUserPassword1").toString().equals(userInfoMap.get("mUserPassword2").toString())) {
             checkResult = "两次输入的密码不一致，请重新输入";
-        }else if (userInfoMap.get("mNickName").toString().trim().length() == 0) {
+        } else if (userInfoMap.get("mNickName").toString().trim().length() == 0) {
             checkResult = "昵称不能为空";
         }
         if (checkResult != null) {
+            if (view == null) {
+                return false;
+            }
             view.showToast(checkResult);
             return false;
         }
@@ -52,7 +57,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
     @Override
     public void authority(Map<String, Object> userInfoMap) {
         if (!checkInput(userInfoMap)) {
-            return ;
+            return;
         }
         view.showLoading("正在注册....");
         signUp(userInfoMap)
@@ -61,16 +66,25 @@ public class SignUpPresenter implements SignUpContract.Presenter {
                 .subscribe(new Observer<DroiError>() {
                     @Override
                     public void onCompleted() {
+                        if (view == null) {
+                            return;
+                        }
                         view.hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showToast("网络错误!" );
+                        if (view == null) {
+                            return;
+                        }
+                        view.showToast("网络错误!");
                     }
 
                     @Override
                     public void onNext(DroiError droiError) {
+                        if (view == null) {
+                            return;
+                        }
                         if (droiError.isOk()) {
                             view.showToast("注册成功!");
                             view.gotoSignInView();
@@ -80,12 +94,12 @@ public class SignUpPresenter implements SignUpContract.Presenter {
                                 errString = "账户已经存在！";
                             } else {
                                 errString = "账户注册失败！";
+                                Log.i("chenpei", "error:" + droiError);
                             }
                             view.showToast(errString);
                         }
                     }
                 });
-
     }
 
     public static Observable<DroiError> signUp(final Map<String, Object> userInfoMap) {
@@ -93,7 +107,10 @@ public class SignUpPresenter implements SignUpContract.Presenter {
             @Override
             public void call(final Subscriber<? super DroiError> subscriber) {
                 try {
-                    User user = new User();
+                    User user = User.getCurrentUser(User.class);
+                    if (user == null) {
+                        user = new User();
+                    }
                     user.setUserId(userInfoMap.get("mUserName").toString());
                     user.setPassword(userInfoMap.get("mUserPassword1").toString());
                     user.setNickName(userInfoMap.get("mNickName").toString());
@@ -104,7 +121,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
                     subscriber.onNext(droiError);
                 } catch (Exception e) {
                     subscriber.onError(e);
-                }finally{
+                } finally {
                     subscriber.onCompleted();
                 }
             }

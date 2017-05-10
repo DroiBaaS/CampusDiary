@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.campus.diary"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    package="com.campus.diary">
 
-    <uses-sdk
-        android:minSdkVersion="15"
-        android:targetSdkVersion="22" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -21,54 +13,46 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
-
-
-
     <application
-        android:allowBackup="true"
         android:name="com.campus.diary.MyApplication"
+        android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <!-- app info start -->
         <meta-data
             android:name="com.droi.sdk.secret_key"
-            android:value="goesx1ac" />
+            android:value="nbisk91n" />
         <meta-data
             android:name="com.droi.sdk.application_id"
-            android:value="c6qumbzh9AWE--Dm6ZiIDYR68Sqf7eDJlQAAEtoC" />
+            android:value="xtfvmbzhpjG0i8uXVuGZ83JdihD2hqiClQD1LpgQ" />
         <meta-data
             android:name="com.droi.sdk.channel_name"
             android:value="DEFAULT_CHANNEL" />
-        <meta-data
-            android:name="com.droi.sdk.platform_key"
-            android:value="LfbFOaXJHE0B51rSpferdXrYVUxN-5SrdXrYVUxN" />
         <!-- app info end -->
-
-        <activity
-            android:name="com.campus.diary.activity.SignInActivity"
-            android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
-        <activity
-            android:name="com.campus.diary.activity.SignUpActivity"
-            android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
+        <meta-data
+            android:name="com.campus.diary.utils.MyGlideModule"
+            android:value="GlideModule" />
 
         <activity
             android:name="com.campus.diary.activity.MainActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.campus.diary.activity.ImagePagerActivity">
-
-        </activity>
+        <activity android:name="com.campus.diary.activity.ImagePagerActivity" />
+        <activity
+            android:name="com.campus.diary.activity.SignInActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.campus.diary.activity.SignUpActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.campus.diary.activity.ImageBucketChooseActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -82,8 +66,8 @@
         <activity
             android:name="com.campus.diary.activity.PublishActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:launchMode="singleTop"
+            android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name="com.campus.diary.activity.ImageZoomActivity"
@@ -92,17 +76,25 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name="com.campus.diary.activity.SelfActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
-        />
-        <activity android:name="com.campus.diary.activity.ProfileActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name="com.campus.diary.activity.ChangePasswordActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name="com.campus.diary.activity.AboutActivity"
-            android:theme="@android:style/Theme.NoTitleBar"/>
-        <meta-data
-            android:name="com.campus.diary.utils.MyGlideModule"
-            android:value="GlideModule" />
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.campus.diary.activity.ProfileActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.campus.diary.activity.ChangePasswordActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.campus.diary.activity.AboutActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

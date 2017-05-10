@@ -22,7 +22,6 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -50,7 +49,7 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     public void addTitle(String titleStr) {
-        back_button = (ImageView)findViewById(R.id.back_botton);
+        back_button = (ImageView) findViewById(R.id.back_botton);
         title_tv = (TextView) findViewById(R.id.title_tv);
         title_tv.setText(titleStr);
         right_button = (Button) findViewById(R.id.right_botton);
@@ -67,8 +66,7 @@ public abstract class BaseActivity extends FragmentActivity {
         }
     }
 
-
-    public void setrightButton(int buttonId,View.OnClickListener listener) {
+    public void setrightButton(int buttonId, View.OnClickListener listener) {
         if (right_button != null) {
             right_button.setVisibility(View.VISIBLE);
             right_button.setText(buttonId);
@@ -76,7 +74,7 @@ public abstract class BaseActivity extends FragmentActivity {
         }
     }
 
-    public void setrightButton(String buttonStr,View.OnClickListener listener) {
+    public void setrightButton(String buttonStr, View.OnClickListener listener) {
         if (right_button != null) {
             right_button.setVisibility(View.VISIBLE);
             right_button.setText(buttonStr);

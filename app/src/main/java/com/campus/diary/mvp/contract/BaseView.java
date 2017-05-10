@@ -5,6 +5,8 @@ package com.campus.diary.mvp.contract;
  */
 public interface BaseView {
     void showLoading(String msg);
+
     void hideLoading();
+
     void showToast(String msg);
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/body"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include
         android:id="@+id/title_bar"
@@ -15,11 +15,11 @@
         android:layout_margin="10dp"
         android:background="@drawable/body_cont"
         android:gravity="center_vertical"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="50dp" >
+            android:layout_height="50dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -36,11 +36,11 @@
                 android:layout_marginLeft="40dp"
                 android:background="#ffffff"
                 android:hint="@string/login_username"
+                android:maxLength="20"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:singleLine="true"
                 android:textColor="#000000"
-                android:maxLength="20"
                 android:textSize="16dp" />
         </FrameLayout>
 
@@ -51,7 +51,7 @@
 
         <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="50dp" >
+            android:layout_height="50dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -68,12 +68,12 @@
                 android:layout_marginLeft="40dp"
                 android:background="#ffffff"
                 android:hint="@string/login_password"
+                android:inputType="textPassword"
+                android:maxLength="20"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColor="#000000"
-                android:maxLength="20"
                 android:textSize="16dp" />
         </FrameLayout>
     </LinearLayout>

@@ -7,7 +7,7 @@ import com.campus.diary.R;
 /**
  * Created by Allen.Zeng on 2016/12/15.
  */
-public class AboutActivity extends BaseActivity{
+public class AboutActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

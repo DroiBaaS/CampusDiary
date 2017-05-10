@@ -1,5 +1,6 @@
 package com.campus.diary.spannable;
 
+import android.content.Context;
 import android.text.Layout;
 import android.text.Selection;
 import android.text.Spannable;
@@ -10,7 +11,6 @@ import android.text.style.ClickableSpan;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
-import com.campus.diary.MyApplication;
 import com.campus.diary.R;
 
 /**
@@ -19,11 +19,11 @@ import com.campus.diary.R;
 public class CircleMovementMethod extends BaseMovementMethod {
     public final String TAG = CircleMovementMethod.class.getSimpleName();
     private final static int DEFAULT_COLOR_ID = R.color.transparent;
-    private final static int DEFAULT_CLICKABLEA_COLOR_ID = R.color.default_clickable_color;
+    private final static int DEFAULT_CLICKABLE_COLOR_ID = R.color.color_CCCCCC;
     /**整个textView的背景色*/
     private int textViewBgColor;
     /**点击部分文字时部分文字的背景色*/
-    private int clickableSpanBgClor;
+    private int clickableSpanBgColor;
 
     private BackgroundColorSpan mBgSpan;
     private ClickableSpan[] mClickLinks;
@@ -38,28 +38,27 @@ public class CircleMovementMethod extends BaseMovementMethod {
         this.isPassToTv = isPassToTv;
     }
 
-    public CircleMovementMethod(){
-        this.textViewBgColor = MyApplication.getContext().getResources().getColor(DEFAULT_COLOR_ID);
-        this.clickableSpanBgClor = MyApplication.getContext().getResources().getColor(DEFAULT_CLICKABLEA_COLOR_ID);
+    public CircleMovementMethod(Context context) {
+        this.textViewBgColor = context.getResources().getColor(DEFAULT_COLOR_ID);
+        this.clickableSpanBgColor = context.getResources().getColor(DEFAULT_CLICKABLE_COLOR_ID);
     }
 
     /**
-     *
-     * @param clickableSpanBgClor  点击选中部分时的背景色
+     * @param clickableSpanBgColor 点击选中部分时的背景色
      */
-    public CircleMovementMethod(int clickableSpanBgClor){
-        this.clickableSpanBgClor = clickableSpanBgClor;
-        this.textViewBgColor = MyApplication.getContext().getResources().getColor(DEFAULT_COLOR_ID);
+    public CircleMovementMethod(Context context, int clickableSpanBgColor) {
+        this.clickableSpanBgColor = clickableSpanBgColor;
+        this.textViewBgColor = context.getResources().getColor(DEFAULT_COLOR_ID);
     }
 
     /**
      *
-     * @param clickableSpanBgClor 点击选中部分时的背景色
+     * @param clickableSpanBgColor 点击选中部分时的背景色
      * @param textViewBgColor 整个textView点击时的背景色
      */
-    public CircleMovementMethod(int clickableSpanBgClor, int textViewBgColor){
+    public CircleMovementMethod(int clickableSpanBgColor, int textViewBgColor){
         this.textViewBgColor = textViewBgColor;
-        this.clickableSpanBgClor = clickableSpanBgClor;
+        this.clickableSpanBgColor = clickableSpanBgColor;
     }
 
     public boolean onTouchEvent(TextView widget, Spannable buffer,
@@ -88,7 +87,7 @@ public class CircleMovementMethod extends BaseMovementMethod {
                         buffer.getSpanStart(mClickLinks[0]),
                         buffer.getSpanEnd(mClickLinks[0]));
                 //设置点击区域的背景色
-                mBgSpan = new BackgroundColorSpan(clickableSpanBgClor);
+                mBgSpan = new BackgroundColorSpan(clickableSpanBgColor);
                 buffer.setSpan(mBgSpan,
                         buffer.getSpanStart(mClickLinks[0]),
                         buffer.getSpanEnd(mClickLinks[0]),
