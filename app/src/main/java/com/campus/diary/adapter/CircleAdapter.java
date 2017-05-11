@@ -61,9 +61,9 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
         }
         int itemType = CircleViewHolder.TYPE_IMAGE;
         CircleItem item = (CircleItem) datas.get(position - 1);
-        if (CircleItem.TYPE_URL.equals(item.getType())) {
+        if (CircleItem.TYPE_URL == item.getType()) {
             itemType = CircleViewHolder.TYPE_URL;
-        } else if (CircleItem.TYPE_IMG.equals(item.getType())) {
+        } else if (CircleItem.TYPE_IMG == item.getType()) {
             itemType = CircleViewHolder.TYPE_IMAGE;
         }
         return itemType;
@@ -266,7 +266,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                                 @Override
                                 public void onItemClick(View view, int position) {
                                     ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(view.getMeasuredWidth(), view.getMeasuredHeight());
-                                    List<String> photoUrls = new ArrayList<String>();
+                                    List<String> photoUrls = new ArrayList<>();
                                     for (DroiFile photo : photos) {
                                         photoUrls.add(photo.getUri().toString());
                                     }

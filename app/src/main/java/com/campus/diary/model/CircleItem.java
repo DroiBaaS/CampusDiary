@@ -13,12 +13,12 @@ import java.util.List;
 
 public class CircleItem extends DroiObject {
 
-    public final static String TYPE_URL = "1";
-    public final static String TYPE_IMG = "2";
+    public final static int TYPE_URL = 1;
+    public final static int TYPE_IMG = 2;
     @DroiExpose
     private String content;
     @DroiExpose
-    private String type;//1:链接  2:图片
+    private int type;//1:链接  2:图片
     @DroiExpose
     private String linkImg;
     @DroiExpose
@@ -44,11 +44,11 @@ public class CircleItem extends DroiObject {
         this.content = content;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

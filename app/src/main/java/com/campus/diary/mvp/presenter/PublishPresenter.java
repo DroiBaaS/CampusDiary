@@ -94,7 +94,7 @@ public class PublishPresenter implements PublishContract.Presenter {
                     CircleItem data = new CircleItem();
                     data.setContent(content);
                     data.setUser(User.getCurrentUser(User.class));
-                    data.setType("2"); //保留字段
+                    data.setType(2); //保留字段
                     data.setPhotos(createPhotos(items));
                     DroiPermission permission = new DroiPermission();
                     permission.setPublicReadPermission(true);

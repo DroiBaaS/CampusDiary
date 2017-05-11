@@ -29,7 +29,7 @@
             android:value="xtfvmbzhpjG0i8uXVuGZ83JdihD2hqiClQD1LpgQ" />
         <meta-data
             android:name="com.droi.sdk.channel_name"
-            android:value="DEFAULT_CHANNEL" />
+            android:value="DROI_CHANNEL" />
         <!-- app info end -->
         <meta-data
             android:name="com.campus.diary.utils.MyGlideModule"
