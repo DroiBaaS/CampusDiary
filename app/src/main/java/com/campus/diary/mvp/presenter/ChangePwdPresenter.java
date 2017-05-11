@@ -1,5 +1,8 @@
 package com.campus.diary.mvp.presenter;
 
+import android.util.Log;
+
+import com.campus.diary.R;
 import com.campus.diary.mvp.contract.ChangePwdContract;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiUser;
@@ -10,10 +13,9 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ChangePwdPresenter implements ChangePwdContract.Presenter {
+    private final static String TAG = "ChangePwdPresenter";
+
     private ChangePwdContract.View view;
 
     public ChangePwdPresenter(ChangePwdContract.View view) {
@@ -22,11 +24,10 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter {
 
     @Override
     public void changePassword(String oldPassword, String newPassword, String newPasswordAgain) {
-        if (checkInput(oldPassword, newPassword, newPasswordAgain) == false) {
+        if (!checkInput(oldPassword, newPassword, newPasswordAgain)) {
             return;
         }
-        //上传进度提示
-        view.showLoading("修改中...");
+        view.showLoading(view.getResString(R.string.changing));
         changeUserPassword(oldPassword, newPassword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -44,7 +45,9 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter {
                         if (view == null) {
                             return;
                         }
-                        view.showToast("网络错误!");
+                        Log.i(TAG, e.toString());
+                        view.showToast(view.getResString(R.string.error));
+                        view.hideLoading();
                     }
 
                     @Override
@@ -53,13 +56,14 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter {
                             return;
                         }
                         if (droiError.isOk()) {
-                            view.showToast("修改成功!");
+                            view.showToast(view.getResString(R.string.change_success));
                         } else {
                             String errString;
                             if (droiError.getCode() == DroiError.USER_PASSWORD_INCORRECT) {
-                                errString = "原密码不正确！";
+                                errString = view.getResString(R.string.wrong_old_password);
                             } else {
-                                errString = "修改失败！";
+                                Log.i(TAG, "error:" + droiError);
+                                errString = view.getResString(R.string.change_failed);
                             }
                             view.showToast(errString);
                         }
@@ -67,7 +71,7 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter {
                 });
     }
 
-    public static Observable<DroiError> changeUserPassword(final String oldPassword, final String newPassword) {
+    private static Observable<DroiError> changeUserPassword(final String oldPassword, final String newPassword) {
         return Observable.create(new Observable.OnSubscribe<DroiError>() {
             @Override
             public void call(final Subscriber<? super DroiError> subscriber) {
@@ -86,21 +90,18 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter {
         });
     }
 
-    protected boolean checkInput(String oldPassword, String newPassword, String newPasswordAgain) {
+    private boolean checkInput(String oldPassword, String newPassword, String newPasswordAgain) {
         if (oldPassword.length() < 6) {
-            view.showToast("原密码不能小于6个字符");
+            view.showToast(view.getResString(R.string.password_too_short));
             return false;
         } else if (newPassword.length() < 6) {
-            view.showToast("设置密码不能小于6个字符");
+            view.showToast(view.getResString(R.string.password_too_short));
             return false;
         } else if (newPassword.contains(" ") || oldPassword.contains(" ")) {
-            view.showToast("密码不能含有空格");
-            return false;
-        } else if (newPassword.equals(oldPassword)) {
-            view.showToast("设置密码不能与原密码相同");
+            view.showToast(view.getResString(R.string.password_contain_blank));
             return false;
         } else if (!newPassword.equals(newPasswordAgain)) {
-            view.showToast("两次输入的新密码不一致");
+            view.showToast(view.getResString(R.string.wrong_two_password));
             return false;
         }
         return true;

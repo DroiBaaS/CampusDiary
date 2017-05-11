@@ -16,9 +16,6 @@ import com.campus.diary.model.CommentItem;
 import com.campus.diary.model.User;
 import com.campus.diary.mvp.presenter.CirclePresenter;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class CommentDialog extends Dialog implements
         android.view.View.OnClickListener {
 

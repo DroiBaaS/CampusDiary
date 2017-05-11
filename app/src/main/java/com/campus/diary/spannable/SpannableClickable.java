@@ -4,9 +4,6 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public abstract class SpannableClickable extends ClickableSpan implements View.OnClickListener {
 
     private int textColor;

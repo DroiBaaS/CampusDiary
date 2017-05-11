@@ -13,9 +13,6 @@ import android.widget.TextView;
 
 import com.campus.diary.R;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class CircleMovementMethod extends BaseMovementMethod {
     public final String TAG = CircleMovementMethod.class.getSimpleName();
     private final static int DEFAULT_COLOR_ID = R.color.transparent;

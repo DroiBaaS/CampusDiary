@@ -16,7 +16,6 @@
         android:scaleType="centerCrop" />
 
     <RelativeLayout
-        android:id="@+id/info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -26,7 +25,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="相册名称"
+            android:text="@string/album_name"
             android:textColor="@color/black"
             android:textSize="14sp" />
 

@@ -8,21 +8,12 @@ import android.widget.TextView;
 
 import com.campus.diary.R;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
-public class URLViewHolder extends CircleViewHolder {
-    public LinearLayout urlBody;
-    /**
-     * 链接的图片
-     */
-    public ImageView urlImageIv;
-    /**
-     * 链接的标题
-     */
-    public TextView urlContentTv;
+class URLViewHolder extends CircleViewHolder {
+    LinearLayout urlBody;
+    ImageView urlImageIv;
+    TextView urlContentTv;
 
-    public URLViewHolder(View itemView) {
+    URLViewHolder(View itemView) {
         super(itemView, TYPE_URL);
     }
 

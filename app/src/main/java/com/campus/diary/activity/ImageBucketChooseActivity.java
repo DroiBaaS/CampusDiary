@@ -19,9 +19,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ImageBucketChooseActivity extends BaseActivity {
     private ImageFetcher mHelper;
     private List<ImageBucket> mDataList = new ArrayList<>();
@@ -46,10 +43,10 @@ public class ImageBucketChooseActivity extends BaseActivity {
     }
 
     private void initView() {
-        mListView = (ListView) findViewById(R.id.listview);
+        mListView = (ListView) findViewById(R.id.list_view);
         mAdapter = new ImageBucketAdapter(this, mDataList);
         mListView.setAdapter(mAdapter);
-        addTitle("相册");
+        addTitle(getString(R.string.photo_album));
         mListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -67,7 +64,7 @@ public class ImageBucketChooseActivity extends BaseActivity {
                 startActivityForResult(intent, 1);
             }
         });
-        setrightButton("取消", new OnClickListener() {
+        setRightButton(getString(R.string.cancel), new OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

@@ -15,17 +15,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ImageFetcher {
     private static ImageFetcher instance;
     private Context mContext;
     private HashMap<String, ImageBucket> mBucketList = new HashMap<String, ImageBucket>();
     private HashMap<String, String> mThumbnailList = new HashMap<String, String>();
-
-    private ImageFetcher() {
-    }
 
     private ImageFetcher(Context context) {
         this.mContext = context;
@@ -96,7 +90,7 @@ public class ImageFetcher {
                     if (bucket == null) {
                         bucket = new ImageBucket();
                         mBucketList.put(bucketId, bucket);
-                        bucket.imageList = new ArrayList<ImageItem>();
+                        bucket.imageList = new ArrayList<>();
                         bucket.bucketName = bucketName;
                     }
                     bucket.count++;

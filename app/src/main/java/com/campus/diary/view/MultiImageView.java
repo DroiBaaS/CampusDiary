@@ -2,7 +2,6 @@ package com.campus.diary.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -16,18 +15,9 @@ import com.droi.sdk.core.DroiFile;
 
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class MultiImageView extends LinearLayout {
     public static int MAX_WIDTH = 0;
-
-    // 照片的Url列表
     private List<DroiFile> imagesList;
-
-    /**
-     * 长度 单位为Pixel
-     **/
     private int pxOneMaxWandH;  // 单张图最大允许宽高
     private int pxMoreWandH = 0;// 多张图的宽高
     private int pxImagePadding = DensityUtil.dip2px(getContext(), 3);// 图片间的间距
@@ -163,9 +153,7 @@ public class MultiImageView extends LinearLayout {
     }
 
     private ImageView createImageView(int position, final boolean isMultiImage) {
-        long time34 = System.currentTimeMillis();
         DroiFile photoInfo = imagesList.get(position);
-        Log.i("chenpei", "photoInfo hasUri:" + photoInfo.hasUri());
         ImageView imageView = new ColorFilterImageView(getContext());
         if (isMultiImage) {
             imageView.setScaleType(ScaleType.CENTER_CROP);
@@ -182,8 +170,6 @@ public class MultiImageView extends LinearLayout {
                 .load(photoInfo.getUri())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
-        long time35 = System.currentTimeMillis();
-        Log.i("chenpei", "position:" + position + ",time5:" + (time35 - time34));
         return imageView;
     }
 

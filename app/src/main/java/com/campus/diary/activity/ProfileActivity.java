@@ -1,24 +1,14 @@
 package com.campus.diary.activity;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.support.annotation.StringRes;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,9 +21,6 @@ import com.campus.diary.mvp.presenter.ProfilePresenter;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ProfileActivity extends BaseActivity implements ProfileContract.View, View.OnClickListener {
     private TextView userNameText, changeNickTv;
     private ImageView headImageView;
@@ -60,12 +47,6 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         setBackButton();
         progressDialog = new ProgressDialog(this);
         userNameText = (TextView) findViewById(R.id.user_id);
-        changeNickTv = (TextView) findViewById(R.id.changenick);
-        User user = DroiUser.getCurrentUser(User.class);
-        if (user != null && user.isAuthorized() && !user.isAnonymous()) {
-            if (user.getNickName() != null)
-                changeNickTv.setText(user.getNickName());
-        }
         headImageView = (ImageView) findViewById(R.id.head_pic);
         findViewById(R.id.head).setOnClickListener(this);
         findViewById(R.id.profile_logout).setOnClickListener(this);
@@ -187,67 +168,8 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         progressDialog.dismiss();
     }
 
-    @SuppressLint("ValidFragment")
-    class CustomDialogFragment extends DialogFragment {
-
-        private ImageView iv_quxiao_popup;//取消按钮
-        private ImageView iv_write_popup; //确认按钮
-        private EditText et_comment_popup;//评论内容
-        private LinearLayout ll_background_dialog;//容器
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            //这句代码的意思是让dialogFragment弹出时沾满全屏
-            setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Holo_Light_DialogWhenLarge_NoActionBar);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.pop_nickname, null);
-            //让DialogFragment的背景为透明
-            getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            initView(view);
-            initEvent();
-            return view;
-        }
-
-        //初始化view
-        private void initView(View view) {
-            iv_quxiao_popup = (ImageView) view.findViewById(R.id.cancel_popup);
-            iv_write_popup = (ImageView) view.findViewById(R.id.commit_popup);
-            et_comment_popup = (EditText) view.findViewById(R.id.nickname_popup);
-            ll_background_dialog = (LinearLayout) view.findViewById(R.id.ll_background_dialog);
-        }
-
-        private void initEvent() {
-            //取消
-            iv_quxiao_popup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dismiss();
-                }
-            });
-            //确认
-            iv_write_popup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String name = et_comment_popup.getText().toString();
-                    if (TextUtils.isEmpty(name)) {
-                        showToast("昵称不能为空");
-                        return;
-                    }
-                    profileLogic.updateNickname(name);
-                    dismiss();
-                }
-            });
-            ll_background_dialog.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dismiss();
-                }
-            });
-        }
+    @Override
+    public String getResString(@StringRes int resId) {
+        return getString(resId);
     }
 }

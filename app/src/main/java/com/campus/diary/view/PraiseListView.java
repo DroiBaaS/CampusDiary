@@ -10,7 +10,6 @@ import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
 import com.campus.diary.R;
 import com.campus.diary.model.FavorItem;
@@ -19,9 +18,6 @@ import com.campus.diary.spannable.SpannableClickable;
 
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class PraiseListView extends android.support.v7.widget.AppCompatTextView {
 
     private int itemColor;

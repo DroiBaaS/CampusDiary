@@ -9,9 +9,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ColorFilterImageView extends android.support.v7.widget.AppCompatImageView implements OnTouchListener {
     public ColorFilterImageView(Context context) {
         this(context, null, 0);

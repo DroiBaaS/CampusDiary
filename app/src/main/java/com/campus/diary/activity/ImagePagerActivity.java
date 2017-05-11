@@ -28,13 +28,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ImagePagerActivity extends BaseActivity {
-    public static final String INTENT_IMGURLS = "imgurls";
+    public static final String INTENT_IMG_URLS = "imgurls";
     public static final String INTENT_POSITION = "position";
-    public static final String INTENT_IMAGESIZE = "imagesize";
+    public static final String INTENT_IMAGE_SIZE = "imagesize";
 
     private List<View> guideViewList = new ArrayList<View>();
     private LinearLayout guideGroup;
@@ -44,9 +41,9 @@ public class ImagePagerActivity extends BaseActivity {
 
     public static void startImagePagerActivity(Context context, List<String> imgUrls, int position, ImageSize imageSize) {
         Intent intent = new Intent(context, ImagePagerActivity.class);
-        intent.putStringArrayListExtra(INTENT_IMGURLS, new ArrayList<>(imgUrls));
+        intent.putStringArrayListExtra(INTENT_IMG_URLS, new ArrayList<>(imgUrls));
         intent.putExtra(INTENT_POSITION, position);
-        intent.putExtra(INTENT_IMAGESIZE, imageSize);
+        intent.putExtra(INTENT_IMAGE_SIZE, imageSize);
         context.startActivity(intent);
     }
 
@@ -71,7 +68,7 @@ public class ImagePagerActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 for (int i = 0; i < guideViewList.size(); i++) {
-                    guideViewList.get(i).setSelected(i == position ? true : false);
+                    guideViewList.get(i).setSelected(i == position);
                 }
             }
 
@@ -88,8 +85,8 @@ public class ImagePagerActivity extends BaseActivity {
 
     private void getIntentData() {
         startPos = getIntent().getIntExtra(INTENT_POSITION, 0);
-        imgUrls = getIntent().getStringArrayListExtra(INTENT_IMGURLS);
-        imageSize = (ImageSize) getIntent().getSerializableExtra(INTENT_IMAGESIZE);
+        imgUrls = getIntent().getStringArrayListExtra(INTENT_IMG_URLS);
+        imageSize = (ImageSize) getIntent().getSerializableExtra(INTENT_IMAGE_SIZE);
     }
 
     private void addGuideView(LinearLayout guideGroup, int startPos, ArrayList<String> imgUrls) {
@@ -98,7 +95,7 @@ public class ImagePagerActivity extends BaseActivity {
             for (int i = 0; i < imgUrls.size(); i++) {
                 View view = new View(this);
                 view.setBackgroundResource(R.drawable.selector_guide_bg);
-                view.setSelected(i == startPos ? true : false);
+                view.setSelected(i == startPos);
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -125,22 +122,22 @@ public class ImagePagerActivity extends BaseActivity {
     }
 
     private static class ImageAdapter extends PagerAdapter {
-        private List<String> datas = new ArrayList<String>();
+        private List<String> datas = new ArrayList<>();
         private LayoutInflater inflater;
         private Context context;
         private ImageSize imageSize;
         private ImageView smallImageView = null;
 
-        public void setDatas(List<String> datas) {
+        void setDatas(List<String> datas) {
             if (datas != null)
                 this.datas = datas;
         }
 
-        public void setImageSize(ImageSize imageSize) {
+        void setImageSize(ImageSize imageSize) {
             this.imageSize = imageSize;
         }
 
-        public ImageAdapter(Context context) {
+        ImageAdapter(Context context) {
             this.context = context;
             this.inflater = LayoutInflater.from(context);
         }
@@ -157,7 +154,6 @@ public class ImagePagerActivity extends BaseActivity {
             if (view != null) {
                 final ImageView imageView = (ImageView) view.findViewById(R.id.image);
                 if (imageSize != null) {
-                    //预览imageView
                     smallImageView = new ImageView(context);
                     FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(imageSize.getWidth(), imageSize.getHeight());
                     layoutParams.gravity = Gravity.CENTER;

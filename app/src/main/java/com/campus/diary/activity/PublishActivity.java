@@ -2,16 +2,15 @@ package com.campus.diary.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.StringRes;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -19,10 +18,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.campus.diary.R;
 import com.campus.diary.adapter.ImagePublishAdapter;
 import com.campus.diary.model.ImageItem;
@@ -30,7 +27,6 @@ import com.campus.diary.mvp.contract.PublishContract;
 import com.campus.diary.mvp.presenter.PublishPresenter;
 import com.campus.diary.utils.CommonUtils;
 import com.campus.diary.utils.CustomConstants;
-import com.campus.diary.utils.ImageFetcher;
 import com.campus.diary.utils.IntentConstants;
 
 import java.io.File;
@@ -38,9 +34,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class PublishActivity extends BaseActivity implements PublishContract.View, View.OnClickListener {
 
     private GridView mGridView;
@@ -75,7 +68,7 @@ public class PublishActivity extends BaseActivity implements PublishContract.Vie
     }
 
     public void initView() {
-        addTitle("发日记");
+        addTitle(getString(R.string.publish_circle));
         setBackButton();
         btn_take_photo = (Button) this.findViewById(R.id.btn_take_photo);
         btn_pick_photo = (Button) this.findViewById(R.id.btn_pick_photo);
@@ -86,7 +79,7 @@ public class PublishActivity extends BaseActivity implements PublishContract.Vie
         btn_take_photo.setOnClickListener(this);
         progressDialog = new ProgressDialog(PublishActivity.this);
         contentEdit = (EditText) findViewById(R.id.contentText);
-        mGridView = (GridView) findViewById(R.id.gridview);
+        mGridView = (GridView) findViewById(R.id.grid_view);
         mGridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mAdapter = new ImagePublishAdapter(this, mDataList);
         mGridView.setAdapter(mAdapter);
@@ -106,12 +99,12 @@ public class PublishActivity extends BaseActivity implements PublishContract.Vie
                 }
             }
         });
-        setrightButton("发送", new OnClickListener() {
+        setRightButton(getString(R.string.send), new OnClickListener() {
 
             public void onClick(View v) {
                 String content = contentEdit.getText().toString();
                 if (TextUtils.isEmpty(content) && mDataList.size() == 0) {
-                    showToast("内容和图片不能同时为空");
+                    showToast(getString(R.string.content_photo_all_empty));
                     return;
                 }
                 publishLogic.sendData(mDataList, content);
@@ -129,15 +122,6 @@ public class PublishActivity extends BaseActivity implements PublishContract.Vie
             return availSize;
         }
         return 0;
-    }
-
-    public String getString(String s) {
-        String path = null;
-        if (s == null) return "";
-        for (int i = s.length() - 1; i > 0; i++) {
-            s.charAt(i);
-        }
-        return path;
     }
 
     private static final int TAKE_PICTURE = 0x000000;
@@ -233,5 +217,10 @@ public class PublishActivity extends BaseActivity implements PublishContract.Vie
     @Override
     public void gotoMainActivity() {
         finish();
+    }
+
+    @Override
+    public String getResString(@StringRes int resId) {
+        return getString(resId);
     }
 }

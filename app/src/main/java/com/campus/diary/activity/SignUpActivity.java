@@ -3,6 +3,7 @@ package com.campus.diary.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,9 +15,6 @@ import com.campus.diary.mvp.presenter.SignUpPresenter;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class SignUpActivity extends BaseActivity implements SignUpContract.View {
     private EditText mUsername;
     private EditText mUserPassword1;
@@ -36,7 +34,7 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
         mUserPassword2 = (EditText) findViewById(R.id.register_password2);
         mNickName = (EditText) findViewById(R.id.nick_name);
         addTitle(R.string.login_account);
-        setrightButton(R.string.register_regist, new View.OnClickListener() {
+        setRightButton(R.string.sign_up, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signUpLogic.authority(getSignUpInfo());
@@ -63,7 +61,6 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
         return map;
     }
 
-
     @Override
     public void showToast(String result) {
         Toast.makeText(this.getApplicationContext(), result, Toast.LENGTH_SHORT).show();
@@ -86,4 +83,10 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
         startActivity(new Intent(SignUpActivity.this, MainActivity.class));
         finish();
     }
+
+    @Override
+    public String getResString(@StringRes int resId) {
+        return getString(resId);
+    }
+
 }

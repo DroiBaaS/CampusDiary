@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/title_bar"
-        layout="@layout/head_titlebar" />
+        layout="@layout/head_title_bar" />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -35,7 +35,7 @@
                     android:layout_margin="5dp"
                     android:background="#ffffff"
                     android:gravity="center_vertical"
-                    android:hint="用户名（不少于6个字符）"
+                    android:hint="@string/user_name_hint"
                     android:maxLength="20"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -55,7 +55,7 @@
                     android:layout_margin="5dp"
                     android:background="#ffffff"
                     android:gravity="center_vertical"
-                    android:hint="设置昵称"
+                    android:hint="@string/nick_name_hint"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:singleLine="true"
@@ -106,7 +106,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/register_body"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

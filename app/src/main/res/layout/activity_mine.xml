@@ -12,7 +12,7 @@
 
         <include
             android:id="@+id/title_bar"
-            layout="@layout/head_titlebar" />
+            layout="@layout/head_title_bar" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,49 +40,49 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:gravity="center_horizontal"
-                android:text="更换头像"
+                android:text="@string/change_avatar"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/userinfo_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:background="@android:color/white"
-            android:gravity="center_vertical"
-            android:padding="15dp">
+        <!--        <RelativeLayout
+                    android:id="@+id/userinfo_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical"
+                    android:padding="15dp">
 
-            <ImageView
-                android:id="@+id/userinfo_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/common_item_arrow" />
+                    <ImageView
+                        android:id="@+id/userinfo_arrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/common_item_arrow" />
 
-            <ImageView
-                android:id="@+id/userinfo_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_userinfo" />
+                    <ImageView
+                        android:id="@+id/userinfo_icon"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_userinfo" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/userinfo_arrow"
-                android:layout_toRightOf="@+id/userinfo_icon"
-                android:gravity="center_vertical"
-                android:text="我的日记"
-                android:textColor="@android:color/black"
-                android:textSize="17sp" />
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/userinfo_arrow"
+                        android:layout_toRightOf="@+id/userinfo_icon"
+                        android:gravity="center_vertical"
+                        android:text="我的日记"
+                        android:textColor="@android:color/black"
+                        android:textSize="17sp" />
+                </RelativeLayout>-->
 
         <RelativeLayout
             android:id="@+id/update_item"
@@ -117,7 +117,7 @@
                 android:layout_toLeftOf="@id/update_arrow"
                 android:layout_toRightOf="@+id/update_icon"
                 android:gravity="center_vertical"
-                android:text="检查更新"
+                android:text="@string/check_update"
                 android:textColor="@android:color/black"
                 android:textSize="17sp" />
         </RelativeLayout>
@@ -155,7 +155,7 @@
                 android:layout_toLeftOf="@id/feedback_arrow"
                 android:layout_toRightOf="@+id/feedback_icon"
                 android:gravity="center_vertical"
-                android:text="用户反馈"
+                android:text="@string/user_feedback"
                 android:textColor="@android:color/black"
                 android:textSize="17sp" />
         </RelativeLayout>
@@ -193,7 +193,7 @@
                 android:layout_toLeftOf="@id/about_arrow"
                 android:layout_toRightOf="@+id/about_icon"
                 android:gravity="center_vertical"
-                android:text="关于我们"
+                android:text="@string/about_us"
                 android:textColor="@android:color/black"
                 android:textSize="17sp" />
         </RelativeLayout>

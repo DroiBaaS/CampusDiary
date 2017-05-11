@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="赞"
+        android:text="@string/favor"
         android:textColor="#d2d2d2" />
 
     <View
@@ -28,6 +28,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="评论"
+        android:text="@string/comment"
         android:textColor="#d2d2d2" />
 </LinearLayout>

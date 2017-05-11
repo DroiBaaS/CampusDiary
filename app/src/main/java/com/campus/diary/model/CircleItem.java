@@ -11,9 +11,6 @@ import com.droi.sdk.core.DroiReferenceObject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class CircleItem extends DroiObject {
 
     public final static String TYPE_URL = "1";

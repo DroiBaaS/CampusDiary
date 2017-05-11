@@ -2,6 +2,7 @@ package com.campus.diary.mvp.presenter;
 
 import android.util.Log;
 
+import com.campus.diary.R;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiPermission;
 import com.campus.diary.model.User;
@@ -15,43 +16,13 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class SignUpPresenter implements SignUpContract.Presenter {
 
+    private final static String TAG = "SignUpPresenter";
     private SignUpContract.View view;
 
     public SignUpPresenter(SignUpContract.View view) {
         this.view = view;
-    }
-
-    protected boolean checkInput(Map<String, Object> userInfoMap) {
-        String inputInfo = userInfoMap.get("mUserName").toString();
-        String checkResult = null;
-        if (inputInfo.trim().length() == 0) {
-            checkResult = "用户名不能为空";
-        } else if (inputInfo.length() < 6) {
-            checkResult = "用户名太短";
-        } else if (inputInfo.length() > 30) {
-            checkResult = "用户名太长";
-        } else if (userInfoMap.get("mUserPassword1").toString().length() < 6) {
-            checkResult = "密码太短";
-        } else if (userInfoMap.get("mUserPassword1").toString().length() > 30) {
-            checkResult = "密码太长";
-        } else if (!userInfoMap.get("mUserPassword1").toString().equals(userInfoMap.get("mUserPassword2").toString())) {
-            checkResult = "两次输入的密码不一致，请重新输入";
-        } else if (userInfoMap.get("mNickName").toString().trim().length() == 0) {
-            checkResult = "昵称不能为空";
-        }
-        if (checkResult != null) {
-            if (view == null) {
-                return false;
-            }
-            view.showToast(checkResult);
-            return false;
-        }
-        return true;
     }
 
     @Override
@@ -59,7 +30,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
         if (!checkInput(userInfoMap)) {
             return;
         }
-        view.showLoading("正在注册....");
+        view.showLoading(view.getResString(R.string.signuping));
         signUp(userInfoMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,7 +48,8 @@ public class SignUpPresenter implements SignUpContract.Presenter {
                         if (view == null) {
                             return;
                         }
-                        view.showToast("网络错误!");
+                        Log.i(TAG, e.toString());
+                        view.showToast(view.getResString(R.string.error));
                     }
 
                     @Override
@@ -86,15 +58,15 @@ public class SignUpPresenter implements SignUpContract.Presenter {
                             return;
                         }
                         if (droiError.isOk()) {
-                            view.showToast("注册成功!");
+                            view.showToast(view.getResString(R.string.signup_success));
                             view.gotoSignInView();
                         } else {
                             String errString;
                             if (droiError.getCode() == DroiError.USER_ALREADY_EXISTS) {
-                                errString = "账户已经存在！";
+                                errString = view.getResString(R.string.user_already_exist);
                             } else {
-                                errString = "账户注册失败！";
-                                Log.i("chenpei", "error:" + droiError);
+                                errString = view.getResString(R.string.signup_failed);
+                                Log.i(TAG, "error:" + droiError);
                             }
                             view.showToast(errString);
                         }
@@ -126,5 +98,34 @@ public class SignUpPresenter implements SignUpContract.Presenter {
                 }
             }
         });
+    }
+
+    protected boolean checkInput(Map<String, Object> userInfoMap) {
+        String inputInfo = userInfoMap.get("mUserName").toString();
+        String checkResult = null;
+        if (inputInfo.trim().length() == 0) {
+            checkResult = view.getResString(R.string.username_empty);
+        } else if (inputInfo.length() < 6) {
+            checkResult = view.getResString(R.string.username_too_short);
+        } else if (inputInfo.length() > 30) {
+            checkResult = view.getResString(R.string.username_too_long);
+        } else if (userInfoMap.get("mUserPassword1").toString().length() < 6) {
+            checkResult = view.getResString(R.string.password_too_short);
+        } else if (userInfoMap.get("mUserPassword1").toString().length() > 30) {
+            checkResult = view.getResString(R.string.password_too_long);
+        } else if (!userInfoMap.get("mUserPassword1").toString()
+                .equals(userInfoMap.get("mUserPassword2").toString())) {
+            checkResult = view.getResString(R.string.wrong_two_password);
+        } else if (userInfoMap.get("mNickName").toString().trim().length() == 0) {
+            checkResult = view.getResString(R.string.nick_name_empty);
+        }
+        if (checkResult != null) {
+            if (view == null) {
+                return false;
+            }
+            view.showToast(checkResult);
+            return false;
+        }
+        return true;
     }
 }

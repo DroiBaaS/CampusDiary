@@ -9,13 +9,10 @@ import android.widget.TextView;
 
 import com.campus.diary.R;
 import com.campus.diary.model.ImageItem;
-import com.campus.diary.utils.ImageDisplayer;
+import com.campus.diary.utils.ImageDisplay;
 
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ImageGridAdapter extends BaseAdapter {
     private Context mContext;
     private List<ImageItem> mDataList;
@@ -57,7 +54,7 @@ public class ImageGridAdapter extends BaseAdapter {
             mHolder = (ViewHolder) convertView.getTag();
         }
         final ImageItem item = mDataList.get(position);
-        ImageDisplayer.getInstance(mContext).displayBmp(mHolder.imageIv, item.thumbnailPath, item.sourcePath);
+        ImageDisplay.getInstance(mContext).displayBmp(mHolder.imageIv, item.thumbnailPath, item.sourcePath);
         if (item.isSelected) {
             mHolder.selectedIv.setImageDrawable(mContext.getResources()
                     .getDrawable(R.drawable.tag_selected));

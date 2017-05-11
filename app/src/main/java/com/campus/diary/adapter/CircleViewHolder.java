@@ -13,39 +13,27 @@ import com.campus.diary.view.ExpandTextView;
 import com.campus.diary.view.PraiseListView;
 import com.campus.diary.view.SnsPopupWindow;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
-public abstract class CircleViewHolder extends RecyclerView.ViewHolder {
+abstract class CircleViewHolder extends RecyclerView.ViewHolder {
 
-    public final static int TYPE_URL = 1;
-    public final static int TYPE_IMAGE = 2;
-    public final static int TYPE_VIDEO = 3;
+    final static int TYPE_URL = 1;
+    final static int TYPE_IMAGE = 2;
+    final static int TYPE_VIDEO = 3;
 
-    public int viewType;
-    public ImageView headIv;
-    public TextView nameTv;
-    public TextView urlTipTv;
-    /**
-     * 动态的内容
-     */
-    public ExpandTextView contentTv;
-    public TextView timeTv;
-    public TextView deleteBtn;
-    public ImageView snsBtn;
-    /**
-     * 点赞列表
-     */
-    public PraiseListView praiseListView;
-    public LinearLayout digCommentBody;
-    public View digLine;
-    /**
-     * 评论列表
-     */
-    public CommentListView commentList;
-    public SnsPopupWindow snsPopupWindow;
+    int viewType;
+    ImageView headIv;
+    TextView nameTv;
+    TextView urlTipTv;
+    ExpandTextView contentTv;
+    TextView timeTv;
+    TextView deleteBtn;
+    ImageView snsBtn;
+    PraiseListView praiseListView;
+    LinearLayout digCommentBody;
+    View digLine;
+    CommentListView commentList;
+    SnsPopupWindow snsPopupWindow;
 
-    public CircleViewHolder(View itemView, int viewType) {
+    CircleViewHolder(View itemView, int viewType) {
         super(itemView);
         this.viewType = viewType;
         ViewStub viewStub = (ViewStub) itemView.findViewById(R.id.viewStub);

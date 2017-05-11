@@ -16,9 +16,6 @@ import com.campus.diary.model.CommentItem;
 import com.campus.diary.model.FavorItem;
 import com.campus.diary.model.User;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class MyApplication extends Application {
 
     @Override

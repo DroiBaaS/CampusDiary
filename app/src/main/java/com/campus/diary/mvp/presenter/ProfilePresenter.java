@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import com.campus.diary.R;
 import com.campus.diary.model.User;
@@ -27,16 +27,12 @@ import java.io.File;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ProfilePresenter implements ProfileContract.Presenter {
 
+    private final static String TAG = "ProfilePresenter";
     private ProfileContract.View view;
 
     public ProfilePresenter(ProfileContract.View view) {
@@ -46,14 +42,14 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     @Override
     public void uploadHeadIcon(Context context, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
-            view.showToast("获取图片失败");
+            view.showToast(context.getString(R.string.get_photo_failed));
             return;
         }
-        view.showLoading("修改头像中...");
+        view.showLoading(context.getString(R.string.changing_avatar));
         if (data != null) {
             upload(context, data);
         } else {
-            view.showToast("上传失败");
+            view.showToast(context.getString(R.string.upload_failed));
         }
     }
 
@@ -67,6 +63,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 view.showToastByResID(R.string.logout_success);
                 view.finishActivity();
             } else {
+                Log.i(TAG, "error:" + droiError);
                 view.showToastByResID(R.string.logout_failed);
             }
         }
@@ -116,7 +113,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 if (view == null) {
                     return;
                 }
-                view.showToast("网络错误");
+                Log.i(TAG, e.toString());
+                view.showToast(view.getResString(R.string.error));
             }
         });
     }
@@ -132,11 +130,11 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     DroiFile headIcon = new DroiFile(new File(path));
                     updateUserHeadIcon(headIcon);
                 } else {
-                    view.showToast("上传失败");
+                    view.showToast(context.getString(R.string.upload_failed));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                view.showToast("上传失败");
+                view.showToast(context.getString(R.string.upload_failed));
             }
         } else {
             Bundle extras = data.getExtras();
@@ -150,10 +148,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     DroiFile headIcon = new DroiFile(imageBytes);
                     updateUserHeadIcon(headIcon);
                 } else {
-                    view.showToast("上传失败");
+                    view.showToast(context.getString(R.string.upload_failed));
                 }
             } else {
-                view.showToast("上传失败");
+                view.showToast(context.getString(R.string.upload_failed));
             }
         }
     }
@@ -179,10 +177,10 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     return;
                 }
                 if (droiError.isOk()) {
-                    view.showToast("上传成功!");
+                    view.showToast(view.getResString(R.string.upload_success));
                     getHeadIcon();
                 } else {
-                    view.showToast("上传失败");
+                    view.showToast(view.getResString(R.string.upload_failed));
                 }
             }
 
@@ -199,7 +197,8 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 if (view == null) {
                     return;
                 }
-                view.showToast("网络错误");
+                Log.i(TAG, e.toString());
+                view.showToast(view.getResString(R.string.error));
             }
         });
     }

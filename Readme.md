@@ -122,7 +122,7 @@ public class CirclePresenter implements CircleContract.Presenter{
 
 					@Override
 					public void onError(Throwable e) {
-						view.showToast("网络错误！");
+						view.showToast(view.getResString(R.string.error));
 					}
 
 					@Override
@@ -154,7 +154,7 @@ public class CirclePresenter implements CircleContract.Presenter{
 
 				@Override
 				public void onError(Throwable e) {
-					view.showToast("网络错误！");
+					view.showToast(view.getResString(R.string.error));
 				}
 
 				@Override
@@ -188,7 +188,7 @@ public class CirclePresenter implements CircleContract.Presenter{
 
 				@Override
 				public void onError(Throwable e) {
-					view.showToast("网络错误！");
+					view.showToast(view.getResString(R.string.error));
 				}
 
 				@Override
@@ -223,7 +223,7 @@ public class CirclePresenter implements CircleContract.Presenter{
 
 				@Override
 				public void onError(Throwable e) {
-					view.showToast("网络错误！");
+					view.showToast(view.getResString(R.string.error));
 				}
 
 				@Override
@@ -262,7 +262,7 @@ public class CirclePresenter implements CircleContract.Presenter{
 
 				@Override
 				public void onError(Throwable e) {
-					view.showToast("网络错误！");
+					view.showToast(view.getResString(R.string.error));
 				}
 
 				@Override
@@ -298,7 +298,7 @@ public class CirclePresenter implements CircleContract.Presenter{
 
 				@Override
 				public void onError(Throwable e) {
-					view.showToast("网络错误！");
+					view.showToast(view.getResString(R.string.error));
 				}
 
 				@Override

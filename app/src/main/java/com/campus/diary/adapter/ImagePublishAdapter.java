@@ -10,14 +10,11 @@ import android.widget.ImageView;
 import com.campus.diary.R;
 import com.campus.diary.model.ImageItem;
 import com.campus.diary.utils.CustomConstants;
-import com.campus.diary.utils.ImageDisplayer;
+import com.campus.diary.utils.ImageDisplay;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ImagePublishAdapter extends BaseAdapter {
     private List<ImageItem> mDataList = new ArrayList<>();
     private Context mContext;
@@ -62,7 +59,7 @@ public class ImagePublishAdapter extends BaseAdapter {
             imageIv.setBackgroundResource(R.color.bg_gray);
         } else {
             final ImageItem item = mDataList.get(position);
-            ImageDisplayer.getInstance(mContext).displayBmp(imageIv, item.thumbnailPath, item.sourcePath);
+            ImageDisplay.getInstance(mContext).displayBmp(imageIv, item.thumbnailPath, item.sourcePath);
         }
         return convertView;
     }

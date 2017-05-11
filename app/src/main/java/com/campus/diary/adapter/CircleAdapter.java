@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.campus.diary.R;
 import com.campus.diary.activity.ImagePagerActivity;
-import com.campus.diary.activity.SelfActivity;
+import com.campus.diary.activity.MineActivity;
 import com.campus.diary.activity.SignInActivity;
 import com.campus.diary.model.ActionItem;
 import com.campus.diary.model.CircleItem;
@@ -39,9 +38,6 @@ import com.droi.sdk.core.DroiUser;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class CircleAdapter extends BaseRecycleViewAdapter {
 
     public final static int TYPE_HEAD = 0;
@@ -63,7 +59,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
         if (position == 0) {
             return TYPE_HEAD;
         }
-        int itemType = 0;
+        int itemType = CircleViewHolder.TYPE_IMAGE;
         CircleItem item = (CircleItem) datas.get(position - 1);
         if (CircleItem.TYPE_URL.equals(item.getType())) {
             itemType = CircleViewHolder.TYPE_URL;
@@ -113,7 +109,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                     if (user == null || user.isAnonymous()) {
                         context.startActivity(new Intent(context, SignInActivity.class));
                     } else {
-                        context.startActivity(new Intent(context, SelfActivity.class));
+                        context.startActivity(new Intent(context, MineActivity.class));
                     }
                 }
             });
@@ -233,9 +229,9 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
             //判断是否已点赞
             String curUserFavorId = circleItem.getCurUserFavorId(User.getCurrentUser(User.class).getObjectId());
             if (!TextUtils.isEmpty(curUserFavorId)) {
-                snsPopupWindow.getmActionItems().get(0).mTitle = "取消";
+                snsPopupWindow.getmActionItems().get(0).mTitle = context.getString(R.string.cancel);
             } else {
-                snsPopupWindow.getmActionItems().get(0).mTitle = "赞";
+                snsPopupWindow.getmActionItems().get(0).mTitle = context.getString(R.string.favor);
             }
             snsPopupWindow.update();
             snsPopupWindow.setmItemClickListener(new PopupItemClickListener(circlePosition, circleItem, curUserFavorId));
@@ -337,7 +333,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                     mLastTime = System.currentTimeMillis();
                     if (presenter != null) {
                         DroiAnalytics.onEvent(context, "Favor");
-                        if ("赞".equals(actionitem.mTitle.toString())) {
+                        if (context.getString(R.string.favor).equals(actionitem.mTitle.toString())) {
                             presenter.addFavor(mCirclePosition, mCircleItem.getObjectId());
                         } else {//取消点赞
                             presenter.deleteFavor(mCirclePosition, mFavorId);

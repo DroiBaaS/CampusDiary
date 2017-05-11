@@ -2,11 +2,7 @@ package com.campus.diary.mvp.contract;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public interface ProfileContract {
 
     interface View extends BaseView {

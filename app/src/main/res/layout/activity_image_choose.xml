@@ -5,7 +5,7 @@
     android:background="@color/bg_gray">
 
     <GridView
-        android:id="@+id/gridview"
+        android:id="@+id/grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/finish_btn"
@@ -22,12 +22,12 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/btn"
-        android:text="完成"
+        android:text="@string/complete"
         android:textColor="@color/deep_gray"
         android:textSize="20sp" />
 
     <include
         android:id="@+id/title_bar"
-        layout="@layout/head_titlebar" />
+        layout="@layout/head_title_bar" />
 
 </RelativeLayout>

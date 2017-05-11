@@ -14,9 +14,6 @@ import com.campus.diary.spannable.SpannableClickable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class UrlUtils {
 
     public static SpannableStringBuilder formatUrlString(String contentStr) {

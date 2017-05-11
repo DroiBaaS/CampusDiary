@@ -7,9 +7,6 @@ import com.campus.diary.model.FavorItem;
 
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public interface CircleContract {
 
     interface View extends BaseView {

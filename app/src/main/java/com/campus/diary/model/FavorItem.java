@@ -4,9 +4,6 @@ import com.droi.sdk.core.DroiExpose;
 import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiReference;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class FavorItem extends DroiObject {
     @DroiReference
     private User user;

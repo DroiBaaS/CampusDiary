@@ -23,9 +23,6 @@ import com.campus.diary.utils.UrlUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class CommentListView extends LinearLayout {
     private int itemColor;
     private int itemSelectorColor;

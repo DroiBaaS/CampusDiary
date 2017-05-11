@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -31,7 +32,6 @@ import com.campus.diary.model.FavorItem;
 import com.campus.diary.mvp.contract.CircleContract;
 import com.campus.diary.mvp.presenter.CirclePresenter;
 import com.campus.diary.utils.CommonUtils;
-import com.campus.diary.utils.ImageFetcher;
 import com.campus.diary.view.CommentListView;
 import com.campus.diary.view.DivItemDecoration;
 import com.droi.sdk.selfupdate.DroiUpdate;
@@ -41,12 +41,10 @@ import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
+import static com.campus.diary.mvp.presenter.CirclePresenter.LIMIT;
+
 public class MainActivity extends BaseActivity implements CircleContract.View {
 
-    public static final int LIMIT = 5;
     private CircleAdapter circleAdapter;
     private LinearLayout editTextBody;
     private EditText editText;
@@ -65,7 +63,7 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
     private RelativeLayout bodyLayout;
     private LinearLayoutManager layoutManager;
 
-    private final static int TYPE_PULL_REFRESH = 1;
+    public final static int TYPE_PULL_REFRESH = 1;
     private final static int TYPE_UPLOAD_REFRESH = 2;
     private SwipeRefreshLayout.OnRefreshListener refreshListener;
 
@@ -167,8 +165,8 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
     }
 
     private void initTitle() {
-        addTitle("校园日记");
-        setrightButton("发日记", new View.OnClickListener() {
+        addTitle(getString(R.string.app_name));
+        setRightButton(getString(R.string.publish_circle), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, PublishActivity.class));
@@ -398,10 +396,16 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
     @Override
     public void hideLoading() {
         recyclerView.setRefreshing(false);
+        recyclerView.hideMoreProgress();
     }
 
     @Override
     public void showToast(String error) {
         Toast.makeText(this.getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public String getResString(@StringRes int resId) {
+        return getString(resId);
     }
 }

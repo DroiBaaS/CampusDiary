@@ -3,9 +3,6 @@ package com.campus.diary.model;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ActionItem {
     // 定义图片对象
     public Drawable mDrawable;

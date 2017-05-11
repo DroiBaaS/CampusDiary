@@ -4,9 +4,6 @@ import com.droi.sdk.core.DroiExpose;
 import com.droi.sdk.core.DroiFile;
 import com.droi.sdk.core.DroiUser;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class User extends DroiUser {
     @DroiExpose
     private DroiFile headIcon;

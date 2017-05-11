@@ -10,10 +10,6 @@ import android.widget.TextView;
 import com.campus.diary.R;
 import com.droi.sdk.analytics.DroiAnalytics;
 
-
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public abstract class BaseActivity extends FragmentActivity {
     ImageView back_button;
     TextView title_tv;
@@ -27,13 +23,13 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        DroiAnalytics.onResume(BaseActivity.this);
+        DroiAnalytics.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        DroiAnalytics.onPause(BaseActivity.this);
+        DroiAnalytics.onPause(this);
     }
 
     @Override
@@ -66,7 +62,7 @@ public abstract class BaseActivity extends FragmentActivity {
         }
     }
 
-    public void setrightButton(int buttonId, View.OnClickListener listener) {
+    public void setRightButton(int buttonId, View.OnClickListener listener) {
         if (right_button != null) {
             right_button.setVisibility(View.VISIBLE);
             right_button.setText(buttonId);
@@ -74,7 +70,7 @@ public abstract class BaseActivity extends FragmentActivity {
         }
     }
 
-    public void setrightButton(String buttonStr, View.OnClickListener listener) {
+    public void setRightButton(String buttonStr, View.OnClickListener listener) {
         if (right_button != null) {
             right_button.setVisibility(View.VISIBLE);
             right_button.setText(buttonStr);

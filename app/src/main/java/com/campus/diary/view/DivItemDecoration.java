@@ -4,9 +4,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class DivItemDecoration extends RecyclerView.ItemDecoration {
     private int divHeight;
     private boolean hasHead;

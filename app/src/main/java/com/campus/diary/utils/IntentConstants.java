@@ -1,8 +1,5 @@
 package com.campus.diary.utils;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class IntentConstants {
     //相册中图片对象集合
     public static final String EXTRA_IMAGE_LIST = "image_list";

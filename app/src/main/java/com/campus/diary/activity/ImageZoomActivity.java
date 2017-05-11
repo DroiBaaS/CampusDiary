@@ -12,15 +12,12 @@ import android.widget.RelativeLayout;
 
 import com.campus.diary.R;
 import com.campus.diary.model.ImageItem;
-import com.campus.diary.utils.ImageDisplayer;
+import com.campus.diary.utils.ImageDisplay;
 import com.campus.diary.utils.IntentConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ImageZoomActivity extends BaseActivity {
 
     private ViewPager pager;
@@ -46,10 +43,10 @@ public class ImageZoomActivity extends BaseActivity {
         photo_bt_del.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (mDataList.size() == 1) {
-                    removeImgs();
+                    removeImages();
                     finish();
                 } else {
-                    removeImg(currentPosition);
+                    removeImage(currentPosition);
                     pager.removeAllViews();
                     adapter.removeView(currentPosition);
                     adapter.notifyDataSetChanged();
@@ -69,11 +66,11 @@ public class ImageZoomActivity extends BaseActivity {
         mDataList = PublishActivity.mDataList;
     }
 
-    private void removeImgs() {
+    private void removeImages() {
         mDataList.clear();
     }
 
-    private void removeImg(int location) {
+    private void removeImage(int location) {
         if (location + 1 <= mDataList.size()) {
             mDataList.remove(location);
         }
@@ -102,7 +99,7 @@ public class ImageZoomActivity extends BaseActivity {
             int size = dataList.size();
             for (int i = 0; i != size; i++) {
                 ImageView iv = new ImageView(ImageZoomActivity.this);
-                ImageDisplayer.getInstance(ImageZoomActivity.this).displayBmp(
+                ImageDisplay.getInstance(ImageZoomActivity.this).displayBmp(
                         iv, null, dataList.get(i).sourcePath, false);
                 iv.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
                         LayoutParams.MATCH_PARENT));
@@ -140,6 +137,5 @@ public class ImageZoomActivity extends BaseActivity {
                 mViews.remove(position);
             }
         }
-
     }
 }

@@ -9,13 +9,10 @@ import android.widget.TextView;
 
 import com.campus.diary.R;
 import com.campus.diary.model.ImageBucket;
-import com.campus.diary.utils.ImageDisplayer;
+import com.campus.diary.utils.ImageDisplay;
 
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ImageBucketAdapter extends BaseAdapter {
     private List<ImageBucket> mDataList;
     private Context mContext;
@@ -57,7 +54,7 @@ public class ImageBucketAdapter extends BaseAdapter {
         if (item.imageList != null && item.imageList.size() > 0) {
             String thumbPath = item.imageList.get(0).thumbnailPath;
             String sourcePath = item.imageList.get(0).sourcePath;
-            ImageDisplayer.getInstance(mContext).displayBmp(mHolder.coverIv, thumbPath,
+            ImageDisplay.getInstance(mContext).displayBmp(mHolder.coverIv, thumbPath,
                     sourcePath);
         } else {
             mHolder.coverIv.setImageBitmap(null);

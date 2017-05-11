@@ -6,14 +6,11 @@ import android.view.ViewStub;
 import com.campus.diary.R;
 import com.campus.diary.view.MultiImageView;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
-public class ImageViewHolder extends CircleViewHolder {
+class ImageViewHolder extends CircleViewHolder {
 
-    public MultiImageView multiImageView;
+    MultiImageView multiImageView;
 
-    public ImageViewHolder(View itemView) {
+    ImageViewHolder(View itemView) {
         super(itemView, TYPE_IMAGE);
     }
 
@@ -24,7 +21,7 @@ public class ImageViewHolder extends CircleViewHolder {
         }
         viewStub.setLayoutResource(R.layout.viewstub_imgbody);
         View subView = viewStub.inflate();
-        MultiImageView multiImageView = (MultiImageView) subView.findViewById(R.id.multiImagView);
+        MultiImageView multiImageView = (MultiImageView) subView.findViewById(R.id.multi_image_view);
         if (multiImageView != null) {
             this.multiImageView = multiImageView;
         }

@@ -75,7 +75,7 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name="com.campus.diary.activity.SelfActivity"
+            android:name="com.campus.diary.activity.MineActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.campus.diary.activity.ProfileActivity"

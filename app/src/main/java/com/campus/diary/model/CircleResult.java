@@ -5,10 +5,6 @@ import com.droi.sdk.core.DroiObject;
 
 import java.util.List;
 
-/**
- * Created by chenpei on 2017/5/9.
- */
-
 public class CircleResult extends DroiObject {
 
     @DroiExpose

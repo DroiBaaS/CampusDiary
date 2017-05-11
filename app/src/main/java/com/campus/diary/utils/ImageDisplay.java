@@ -18,27 +18,24 @@ import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
-public class ImageDisplayer {
-    private static ImageDisplayer instance;
+public class ImageDisplay {
+    private static ImageDisplay instance;
     private Context context;
     private static final int THUMB_WIDTH = 256;
     private static final int THUMB_HEIGHT = 256;
     private int mScreenWidth;
     private int mScreenHeight;
 
-    public static ImageDisplayer getInstance(Context context) {
+    public static ImageDisplay getInstance(Context context) {
         if (instance == null) {
-            synchronized (ImageDisplayer.class) {
-                instance = new ImageDisplayer(context);
+            synchronized (ImageDisplay.class) {
+                instance = new ImageDisplay(context);
             }
         }
         return instance;
     }
 
-    public ImageDisplayer(Context context) {
+    private ImageDisplay(Context context) {
         if (context.getApplicationContext() != null) {
             this.context = context.getApplicationContext();
         } else {
@@ -49,11 +46,11 @@ public class ImageDisplayer {
         mScreenHeight = dm.heightPixels;
     }
 
-    public Handler h = new Handler();
-    public final String TAG = getClass().getSimpleName();
+    private Handler h = new Handler();
+    private final String TAG = getClass().getSimpleName();
     private HashMap<String, SoftReference<Bitmap>> imageCache = new HashMap<>();
 
-    public void put(String key, Bitmap bmp) {
+    private void put(String key, Bitmap bmp) {
         if (!TextUtils.isEmpty(key) && bmp != null) {
             imageCache.put(key, new SoftReference<>(bmp));
         }
@@ -87,7 +84,6 @@ public class ImageDisplayer {
                 + THUMB_HEIGHT : path)) {
             SoftReference<Bitmap> reference = imageCache.get(showThumb ? path
                     + THUMB_WIDTH + THUMB_HEIGHT : path);
-            // 可以用LruCahche会好些
             Bitmap imgInCache = reference.get();
             if (imgInCache != null) {
                 refreshView(iv, imgInCache, path);
@@ -95,7 +91,6 @@ public class ImageDisplayer {
             }
         }
         iv.setImageBitmap(null);
-        // 不在缓存则加载图片
         new Thread() {
             Bitmap img;
 
@@ -125,7 +120,7 @@ public class ImageDisplayer {
     private void refreshView(ImageView imageView, Bitmap bitmap, String path) {
         if (imageView != null && bitmap != null) {
             if (path != null) {
-                ((ImageView) imageView).setImageBitmap(bitmap);
+                imageView.setImageBitmap(bitmap);
                 imageView.setTag(path);
             }
         }
@@ -135,7 +130,7 @@ public class ImageDisplayer {
         iv.setBackgroundResource(R.drawable.bg_img);
     }
 
-    public Bitmap compressImg(String path, boolean showThumb)
+    private Bitmap compressImg(String path, boolean showThumb)
             throws IOException {
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(
                 new File(path)));

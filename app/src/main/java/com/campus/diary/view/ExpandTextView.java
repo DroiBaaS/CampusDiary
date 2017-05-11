@@ -12,9 +12,6 @@ import android.widget.TextView;
 import com.campus.diary.R;
 import com.campus.diary.spannable.CircleMovementMethod;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ExpandTextView extends LinearLayout {
     public static final int DEFAULT_MAX_LINES = 3;
     private TextView contentText;

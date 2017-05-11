@@ -1,19 +1,10 @@
 package com.campus.diary.model;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class CommentConfig {
+
     public enum Type {
-        PUBLIC("public"),
-        REPLY("reply");
-
-        private String value;
-
-        Type(String value) {
-            this.value = value;
-        }
-
+        PUBLIC,
+        REPLY
     }
 
     public String circleId;

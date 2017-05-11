@@ -16,21 +16,13 @@ import com.campus.diary.R;
 import com.campus.diary.model.ActionItem;
 import com.campus.diary.utils.DensityUtil;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class SnsPopupWindow extends PopupWindow implements OnClickListener {
 
     private TextView digBtn;
     private TextView commentBtn;
-
-    // 实例化一个矩形
     private Rect mRect = new Rect();
-    // 坐标的位置（x、y）
     private final int[] mLocation = new int[2];
-    // 弹窗子类项选中时的监听
     private OnItemClickListener mItemClickListener;
-    // 定义弹窗子类项列表
     private ArrayList<ActionItem> mActionItems = new ArrayList<ActionItem>();
 
     public void setmItemClickListener(OnItemClickListener mItemClickListener) {
@@ -98,18 +90,12 @@ public class SnsPopupWindow extends PopupWindow implements OnClickListener {
         }
     }
 
-    /**
-     * 添加子类项
-     */
     public void addAction(ActionItem action) {
         if (action != null) {
             mActionItems.add(action);
         }
     }
 
-    /**
-     * 功能描述：弹窗子类项按钮监听事件
-     */
     public interface OnItemClickListener {
         void onItemClick(ActionItem item, int position);
     }

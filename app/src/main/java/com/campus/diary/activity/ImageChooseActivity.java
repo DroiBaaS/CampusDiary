@@ -19,14 +19,10 @@ import com.campus.diary.model.ImageItem;
 import com.campus.diary.utils.CustomConstants;
 import com.campus.diary.utils.IntentConstants;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class ImageChooseActivity extends BaseActivity {
     private List<ImageItem> mDataList = new ArrayList<ImageItem>();
     private String mBucketName;
@@ -49,32 +45,32 @@ public class ImageChooseActivity extends BaseActivity {
         mBucketName = getIntent().getStringExtra(
                 IntentConstants.EXTRA_BUCKET_NAME);
         if (TextUtils.isEmpty(mBucketName)) {
-            mBucketName = "请选择";
+            mBucketName = getString(R.string.please_choose);
         }
         availableSize = getIntent().getIntExtra(
                 IntentConstants.EXTRA_CAN_ADD_IMAGE_SIZE,
                 CustomConstants.MAX_IMAGE_SIZE);
         initView();
         initListener();
-
     }
 
     private void initView() {
         addTitle(mBucketName);
-        setrightButton("取消", new OnClickListener() {
+        setRightButton(getString(R.string.cancel), new OnClickListener() {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_OK, null);
                 finish();
             }
         });
-        mGridView = (GridView) findViewById(R.id.gridview);
+        mGridView = (GridView) findViewById(R.id.grid_view);
         mGridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         mAdapter = new ImageGridAdapter(ImageChooseActivity.this, mDataList);
         mGridView.setAdapter(mAdapter);
         mFinishBtn = (Button) findViewById(R.id.finish_btn);
-        mFinishBtn.setText("完成" + "(" + selectedImgs.size() + "/"
-                + availableSize + ")");
+        String completeString = String.format(getString(R.string.complete_num),
+                selectedImgs.size(), availableSize);
+        mFinishBtn.setText(completeString);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -104,16 +100,18 @@ public class ImageChooseActivity extends BaseActivity {
                     selectedImgs.remove(item.imageId);
                 } else {
                     if (selectedImgs.size() >= availableSize) {
-                        Toast.makeText(ImageChooseActivity.this,
-                                "最多选择" + availableSize + "张图片",
-                                Toast.LENGTH_SHORT).show();
+                        String maxChoose = String.format(getString(R.string.max_choose),
+                                availableSize);
+                        Toast.makeText(ImageChooseActivity.this.getApplicationContext(),
+                                maxChoose, Toast.LENGTH_SHORT).show();
                         return;
                     }
                     item.isSelected = true;
                     selectedImgs.put(item.imageId, item);
                 }
-                mFinishBtn.setText("完成" + "(" + selectedImgs.size() + "/"
-                        + availableSize + ")");
+                String completeString = String.format(getString(R.string.complete_num),
+                        selectedImgs.size(), availableSize);
+                mFinishBtn.setText(completeString);
                 mAdapter.notifyDataSetChanged();
             }
         });

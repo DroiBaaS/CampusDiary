@@ -45,7 +45,7 @@
                     android:layout_marginLeft="15dp"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="分享了一个连接"
+                    android:text="@string/share_link"
                     android:textColor="@color/color_aeaeae"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -86,7 +86,7 @@
                     android:background="@drawable/im_selector_social_dig_name_bg"
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
-                    android:text="删除"
+                    android:text="@string/delete"
                     android:textColor="@color/color_8290AF"
                     android:textSize="12sp"
                     android:visibility="gone" />

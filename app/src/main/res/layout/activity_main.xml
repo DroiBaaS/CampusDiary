@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/title_bar"
-        layout="@layout/head_titlebar" />
+        layout="@layout/head_title_bar" />
 
     <RelativeLayout
         android:id="@+id/bodyLayout"
@@ -18,7 +18,6 @@
         android:layout_height="match_parent">
 
         <com.mikhaellopez.circularprogressbar.CircularProgressBar
-            android:id="@+id/video_progress"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
@@ -40,7 +39,7 @@
 
         <include
             android:id="@+id/editTextBodyLl"
-            layout="@layout/layout_editview"
+            layout="@layout/layout_edit_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

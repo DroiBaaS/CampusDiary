@@ -10,12 +10,8 @@ import com.bumptech.glide.module.GlideModule;
 
 import java.io.File;
 
-/**
- * Created by Allen.Zeng on 2016/12/15.
- */
 public class MyGlideModule implements GlideModule {
 
-    // 默认存放图片的路径
     private final static String DEFAULT_SAVE_IMAGE_PATH = Environment.getExternalStorageDirectory() + File.separator + "CircleDemo" + File.separator + "Images"
             + File.separator;
 

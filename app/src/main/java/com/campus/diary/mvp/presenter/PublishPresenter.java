@@ -2,6 +2,7 @@ package com.campus.diary.mvp.presenter;
 
 import android.util.Log;
 
+import com.campus.diary.R;
 import com.campus.diary.model.CircleItem;
 import com.campus.diary.model.ImageItem;
 import com.campus.diary.model.User;
@@ -22,12 +23,9 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by Allen Zeng on 2016/12/24.
- * Email:
- */
 public class PublishPresenter implements PublishContract.Presenter {
 
+    private final static String TAG= "PublishPresenter";
     private PublishContract.View view;
 
     public PublishPresenter(PublishContract.View view) {
@@ -36,10 +34,7 @@ public class PublishPresenter implements PublishContract.Presenter {
 
     @Override
     public void sendData(List<ImageItem> items, String content) {
-        view.showLoading("正在发送...");
-        if (content == null) {
-            content = "";
-        }
+        view.showLoading(view.getResString(R.string.sending));
         createCircleItem(items, content)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,8 +52,8 @@ public class PublishPresenter implements PublishContract.Presenter {
                         if (view == null) {
                             return;
                         }
-                        view.showToast("网络错误!");
-                        Log.i("chenpei", e.toString());
+                        Log.i(TAG, e.toString());
+                        view.showToast(view.getResString(R.string.error));
                         view.hideLoading();
                     }
 
@@ -70,14 +65,15 @@ public class PublishPresenter implements PublishContract.Presenter {
                         if (droiError.isOk()) {
                             view.gotoMainActivity();
                         } else {
-                            view.showToast("发送失败，请检查网络！");
+                            Log.i(TAG, "error:" + droiError);
+                            view.showToast(view.getResString(R.string.error));
                         }
                     }
                 });
     }
 
 
-    public static List<DroiFile> createPhotos(List<ImageItem> items) {
+    private static List<DroiFile> createPhotos(List<ImageItem> items) {
         List<DroiFile> photos = new ArrayList<>();
         for (ImageItem item : items) {
             DroiPermission permission = new DroiPermission();
@@ -90,7 +86,7 @@ public class PublishPresenter implements PublishContract.Presenter {
         return photos;
     }
 
-    public static Observable<DroiError> createCircleItem(final List<ImageItem> items, final String content) {
+    private static Observable<DroiError> createCircleItem(final List<ImageItem> items, final String content) {
         return Observable.create(new Observable.OnSubscribe<DroiError>() {
             @Override
             public void call(final Subscriber<? super DroiError> subscriber) {
@@ -98,7 +94,7 @@ public class PublishPresenter implements PublishContract.Presenter {
                     CircleItem data = new CircleItem();
                     data.setContent(content);
                     data.setUser(User.getCurrentUser(User.class));
-                    data.setType("2");
+                    data.setType("2"); //保留字段
                     data.setPhotos(createPhotos(items));
                     DroiPermission permission = new DroiPermission();
                     permission.setPublicReadPermission(true);
