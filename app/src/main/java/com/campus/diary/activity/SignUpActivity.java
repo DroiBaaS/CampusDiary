@@ -63,7 +63,7 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
 
     @Override
     public void showToast(String result) {
-        Toast.makeText(this.getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -79,14 +79,13 @@ public class SignUpActivity extends BaseActivity implements SignUpContract.View 
     }
 
     @Override
-    public void gotoSignInView() {
-        startActivity(new Intent(SignUpActivity.this, MainActivity.class));
-        finish();
-    }
-
-    @Override
     public String getResString(@StringRes int resId) {
         return getString(resId);
     }
 
+    @Override
+    public void backSignUp() {
+        setResult(RESULT_OK);
+        finish();
+    }
 }

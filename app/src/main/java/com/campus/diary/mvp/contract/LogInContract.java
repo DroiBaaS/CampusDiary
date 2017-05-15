@@ -1,6 +1,6 @@
 package com.campus.diary.mvp.contract;
 
-public interface SignInContract {
+public interface LogInContract {
 
     interface View extends BaseView {
         void gotoMainActivity();

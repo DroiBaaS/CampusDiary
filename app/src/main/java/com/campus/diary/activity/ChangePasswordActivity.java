@@ -12,7 +12,7 @@ import com.campus.diary.R;
 import com.campus.diary.mvp.contract.ChangePwdContract;
 import com.campus.diary.mvp.presenter.ChangePwdPresenter;
 
-public class ChangePasswordActivity extends BaseActivity implements ChangePwdContract.View{
+public class ChangePasswordActivity extends BaseActivity implements ChangePwdContract.View {
     private EditText oldPasswordEditText;
     private EditText newPasswordEditText;
     private EditText retypeNewPasswordEditText;
@@ -36,7 +36,7 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePwdCon
     private void initUI() {
         addTitle(R.string.change_password);
         setBackButton();
-        progressDialog=new ProgressDialog(ChangePasswordActivity.this);
+        progressDialog = new ProgressDialog(ChangePasswordActivity.this);
         oldPasswordEditText = (EditText) findViewById(R.id.old_password);
         newPasswordEditText = (EditText) findViewById(R.id.new_password);
         retypeNewPasswordEditText = (EditText) findViewById(R.id.retype_new_password);
@@ -53,7 +53,7 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePwdCon
         String oldPassword = oldPasswordEditText.getText().toString();
         String newPassword = newPasswordEditText.getText().toString();
         String retypeNewPassword = retypeNewPasswordEditText.getText().toString();
-        pwdLogic.changePassword(oldPassword,newPassword,retypeNewPassword);
+        pwdLogic.changePassword(oldPassword, newPassword, retypeNewPassword);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePwdCon
 
     @Override
     public void showToast(String result) {
-        Toast.makeText(this.getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -78,4 +78,8 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePwdCon
         progressDialog.dismiss();
     }
 
+    @Override
+    public void back() {
+        finish();
+    }
 }

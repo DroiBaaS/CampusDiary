@@ -23,17 +23,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.gifdecoder.GifDecoder;
 import com.campus.diary.R;
 import com.campus.diary.adapter.CircleAdapter;
 import com.campus.diary.model.CircleItem;
 import com.campus.diary.model.CommentConfig;
 import com.campus.diary.model.CommentItem;
 import com.campus.diary.model.FavorItem;
+import com.campus.diary.model.User;
 import com.campus.diary.mvp.contract.CircleContract;
 import com.campus.diary.mvp.presenter.CirclePresenter;
 import com.campus.diary.utils.CommonUtils;
 import com.campus.diary.view.CommentListView;
 import com.campus.diary.view.DivItemDecoration;
+import com.droi.sdk.core.DroiUser;
 import com.droi.sdk.selfupdate.DroiUpdate;
 import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -49,7 +52,7 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
     private LinearLayout editTextBody;
     private EditText editText;
     private ImageView sendIv;
-
+    private String currentUserId = "";
     private int screenHeight;
     private int editTextBodyHeight;
     private int titleHeight;
@@ -65,6 +68,9 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
 
     public final static int TYPE_PULL_REFRESH = 1;
     private final static int TYPE_UPLOAD_REFRESH = 2;
+    public static final int PUBLISH_DIARY = 1001;
+    public static final int REQUEST_LOGIN = 1002;
+
     private SwipeRefreshLayout.OnRefreshListener refreshListener;
 
     @Override
@@ -98,10 +104,24 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        User user = User.getCurrentUser(User.class);
+        if (user == null || !currentUserId.equals(user.getUserId())) {
+            if (user != null) {
+                currentUserId = user.getUserId();
+            }
+            circleAdapter.notifyDataSetChanged();
+            refreshView();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         if (presenter != null) {
             presenter.recycle();
         }
+
         super.onDestroy();
     }
 
@@ -153,7 +173,7 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
                 if (presenter != null) {
                     String content = editText.getText().toString().trim();
                     if (TextUtils.isEmpty(content)) {
-                        Toast.makeText(MainActivity.this, "评论内容不能为空...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "评论内容不能为空...", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     presenter.addComment(content, commentConfig);
@@ -169,7 +189,14 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
         setRightButton(getString(R.string.publish_circle), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, PublishActivity.class));
+                User user = DroiUser.getCurrentUser(User.class);
+                if (user != null && user.isAuthorized() && !user.isAnonymous()) {
+                    Intent intent = new Intent(MainActivity.this, PublishActivity.class);
+                    startActivityForResult(intent, PUBLISH_DIARY);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                    startActivityForResult(intent, REQUEST_LOGIN);
+                }
             }
         });
     }
@@ -401,11 +428,21 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
 
     @Override
     public void showToast(String error) {
-        Toast.makeText(this.getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public String getResString(@StringRes int resId) {
         return getString(resId);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PUBLISH_DIARY) {
+                refreshView();
+            }
+        }
     }
 }

@@ -3,9 +3,11 @@ package com.campus.diary.activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,7 +24,7 @@ import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 public class ProfileActivity extends BaseActivity implements ProfileContract.View, View.OnClickListener {
-    private TextView userNameText, changeNickTv;
+    private TextView userNameText, nickNameText;
     private ImageView headImageView;
     private View selectPic;
     private ProgressDialog progressDialog;
@@ -47,6 +49,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         setBackButton();
         progressDialog = new ProgressDialog(this);
         userNameText = (TextView) findViewById(R.id.user_id);
+        nickNameText = (TextView) findViewById(R.id.nick_name);
         headImageView = (ImageView) findViewById(R.id.head_pic);
         findViewById(R.id.head).setOnClickListener(this);
         findViewById(R.id.profile_logout).setOnClickListener(this);
@@ -94,12 +97,12 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
             case R.id.btn_pick_photo:
                 try {
                     Intent intent;
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
                     } else {
                         intent = new Intent(Intent.ACTION_GET_CONTENT);
                     }
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
                     intent.setType("image/*");
                     startActivityForResult(intent, 2);
                 } catch (ActivityNotFoundException e) {
@@ -121,18 +124,16 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     @Override
     public void refreshProfile() {
         User user = User.getCurrentUser(User.class);
-        if (!user.isAnonymous() && user.getHeadIcon() != null) {
-            Glide.with(this)
-                    .load(user.getHeadIcon().getUri())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(headImageView);
+        if (user != null && !user.isAnonymous()) {
+            if (user.getHeadIcon() != null) {
+                Glide.with(this)
+                        .load(user.getHeadIcon().getUri())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(headImageView);
+            }
+            userNameText.setText(user.getUserId());
+            nickNameText.setText(user.getNickName());
         }
-        userNameText.setText(user.getUserId());
-    }
-
-    @Override
-    public void refreshNickname(String nickname) {
-        changeNickTv.setText(nickname);
     }
 
     @Override
@@ -142,18 +143,19 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         hidePopMenu();
         profileLogic.uploadHeadIcon(this, resultCode, data);
     }
 
     @Override
     public void showToast(String result) {
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showToastByResID(int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), resId, Toast.LENGTH_SHORT).show();
     }
 
     @Override

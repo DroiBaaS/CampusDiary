@@ -7,7 +7,7 @@ public interface SignUpContract {
     interface View extends BaseView {
         Map<String, Object> getSignUpInfo();
 
-        void gotoSignInView();
+        void backSignUp();
     }
 
     interface Presenter {

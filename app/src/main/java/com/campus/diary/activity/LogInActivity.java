@@ -10,11 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campus.diary.R;
-import com.campus.diary.mvp.contract.SignInContract;
+import com.campus.diary.mvp.contract.LogInContract;
 import com.campus.diary.mvp.presenter.LogInPresenter;
 
-public class SignInActivity extends BaseActivity implements SignInContract.View {
-    private SignInContract.Presenter signInLogic;
+public class LogInActivity extends BaseActivity implements LogInContract.View {
+
+    public static final int SIGN_UP = 1;
+    private LogInContract.Presenter signInLogic;
     private EditText username;
     private EditText password;
     private TextView gotoRegister;
@@ -23,27 +25,27 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
-        signInLogic=new LogInPresenter(SignInActivity.this);
-        username=(EditText)findViewById(R.id.login_name);
-        password=(EditText)findViewById(R.id.login_password);
-        gotoRegister=(TextView)findViewById(R.id.login_register);
+        setContentView(R.layout.activity_log_in);
+        signInLogic = new LogInPresenter(LogInActivity.this);
+        username = (EditText) findViewById(R.id.login_name);
+        password = (EditText) findViewById(R.id.login_password);
+        gotoRegister = (TextView) findViewById(R.id.login_register);
 
         addTitle(R.string.login_account);
-        setRightButton(R.string.login_login,new View.OnClickListener() {
+        setRightButton(R.string.login_login, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signInLogic.authority(username.getText().toString(),password.getText().toString());
+                signInLogic.authority(username.getText().toString(), password.getText().toString());
             }
         });
 
         gotoRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SignInActivity.this.startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
+                startActivityForResult(new Intent(LogInActivity.this, SignUpActivity.class), SIGN_UP);
             }
         });
-        progressDialog = new ProgressDialog(SignInActivity.this);
+        progressDialog = new ProgressDialog(LogInActivity.this);
     }
 
     @Override
@@ -60,18 +62,27 @@ public class SignInActivity extends BaseActivity implements SignInContract.View 
 
     @Override
     public void showToast(String error) {
-        Toast.makeText(this.getApplicationContext(),error,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void gotoMainActivity() {
-        startActivity(new Intent(SignInActivity.this, MainActivity.class));
         finish();
     }
 
     @Override
     public String getResString(@StringRes int resId) {
         return getString(resId);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SIGN_UP) {
+                gotoMainActivity();
+            }
+        }
     }
 }
 

@@ -27,6 +27,8 @@ import java.io.File;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -49,7 +51,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         if (data != null) {
             upload(context, data);
         } else {
-            view.showToast(context.getString(R.string.upload_failed));
+            view.showToast(context.getString(R.string.get_photo_failed));
         }
     }
 
@@ -93,7 +95,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     return;
                 }
                 if (droiError.isOk()) {
-                    view.refreshNickname(name);
+                    //view.refreshNickname(name);
                     view.showToast("修改成功!");
                 } else {
                     view.showToast("修改失败");
@@ -170,37 +172,40 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                 subscriber.onNext(droiError);
                 subscriber.onCompleted();
             }
-        }).subscribe(new Observer<DroiError>() {
-            @Override
-            public void onNext(DroiError droiError) {
-                if (view == null) {
-                    return;
-                }
-                if (droiError.isOk()) {
-                    view.showToast(view.getResString(R.string.upload_success));
-                    getHeadIcon();
-                } else {
-                    view.showToast(view.getResString(R.string.upload_failed));
-                }
-            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<DroiError>() {
+                    @Override
+                    public void onNext(DroiError droiError) {
+                        if (view == null) {
+                            return;
+                        }
+                        if (droiError.isOk()) {
+                            view.showToast(view.getResString(R.string.upload_success));
+                            getHeadIcon();
+                        } else {
+                            view.showToast(view.getResString(R.string.upload_failed));
+                        }
+                    }
 
-            @Override
-            public void onCompleted() {
-                if (view == null) {
-                    return;
-                }
-                view.hideLoading();
-            }
+                    @Override
+                    public void onCompleted() {
+                        if (view == null) {
+                            return;
+                        }
+                        view.hideLoading();
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                if (view == null) {
-                    return;
-                }
-                Log.i(TAG, e.toString());
-                view.showToast(view.getResString(R.string.error));
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        if (view == null) {
+                            return;
+                        }
+                        Log.i(TAG, e.toString());
+                        view.showToast(view.getResString(R.string.upload_failed));
+                        view.hideLoading();
+                    }
+                });
     }
 
     private String getPath(final Context context, final Uri uri) {

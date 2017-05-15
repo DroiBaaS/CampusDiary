@@ -57,6 +57,7 @@ public class ChangePwdPresenter implements ChangePwdContract.Presenter {
                         }
                         if (droiError.isOk()) {
                             view.showToast(view.getResString(R.string.change_success));
+                            view.back();
                         } else {
                             String errString;
                             if (droiError.getCode() == DroiError.USER_PASSWORD_INCORRECT) {

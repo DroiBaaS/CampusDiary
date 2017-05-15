@@ -66,7 +66,7 @@ public class PublishPresenter implements PublishContract.Presenter {
                             view.gotoMainActivity();
                         } else {
                             Log.i(TAG, "error:" + droiError);
-                            view.showToast(view.getResString(R.string.error));
+                            view.showToast(view.getResString(R.string.send_failed));
                         }
                     }
                 });

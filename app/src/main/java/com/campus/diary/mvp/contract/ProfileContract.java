@@ -10,8 +10,6 @@ public interface ProfileContract {
 
         void refreshProfile();
 
-        void refreshNickname(String nickname);
-
         void finishActivity();
     }
 

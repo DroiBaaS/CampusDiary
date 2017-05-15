@@ -17,7 +17,7 @@ import java.util.List;
 
 public class MultiImageView extends LinearLayout {
     public static int MAX_WIDTH = 0;
-    private List<DroiFile> imagesList;
+    private List<String> imagesList;
     private int pxOneMaxWandH;  // 单张图最大允许宽高
     private int pxMoreWandH = 0;// 多张图的宽高
     private int pxImagePadding = DensityUtil.dip2px(getContext(), 3);// 图片间的间距
@@ -42,7 +42,7 @@ public class MultiImageView extends LinearLayout {
         super(context, attrs);
     }
 
-    public void setList(List<DroiFile> lists) throws IllegalArgumentException {
+    public void setList(List<String> lists) throws IllegalArgumentException {
         if (lists == null) {
             throw new IllegalArgumentException("imageList is null...");
         }
@@ -153,7 +153,7 @@ public class MultiImageView extends LinearLayout {
     }
 
     private ImageView createImageView(int position, final boolean isMultiImage) {
-        DroiFile photoInfo = imagesList.get(position);
+        String photoInfo = imagesList.get(position);
         ImageView imageView = new ColorFilterImageView(getContext());
         if (isMultiImage) {
             imageView.setScaleType(ScaleType.CENTER_CROP);
@@ -163,11 +163,11 @@ public class MultiImageView extends LinearLayout {
             imageView.setScaleType(ScaleType.CENTER_INSIDE);
             imageView.setLayoutParams(onePicPara);
         }
-        imageView.setId(photoInfo.getUri().hashCode());
+        imageView.setId(photoInfo.hashCode());
         imageView.setOnClickListener(new ImageOnClickListener(position));
         imageView.setBackgroundColor(getResources().getColor(R.color.im_font_color_text_hint));
         Glide.with(getContext())
-                .load(photoInfo.getUri())
+                .load(photoInfo)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
         return imageView;

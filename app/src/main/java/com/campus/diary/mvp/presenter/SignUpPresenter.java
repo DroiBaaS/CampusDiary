@@ -59,7 +59,7 @@ public class SignUpPresenter implements SignUpContract.Presenter {
                         }
                         if (droiError.isOk()) {
                             view.showToast(view.getResString(R.string.signup_success));
-                            view.gotoSignInView();
+                            view.backSignUp();
                         } else {
                             String errString;
                             if (droiError.getCode() == DroiError.USER_ALREADY_EXISTS) {

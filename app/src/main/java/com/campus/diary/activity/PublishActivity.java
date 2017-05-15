@@ -2,15 +2,19 @@ package com.campus.diary.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.StringRes;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -103,7 +107,7 @@ public class PublishActivity extends BaseActivity implements PublishContract.Vie
 
             public void onClick(View v) {
                 String content = contentEdit.getText().toString();
-                if (TextUtils.isEmpty(content) && mDataList.size() == 0) {
+                if (TextUtils.isEmpty(content.trim()) && mDataList.size() == 0) {
                     showToast(getString(R.string.content_photo_all_empty));
                     return;
                 }
@@ -145,7 +149,19 @@ public class PublishActivity extends BaseActivity implements PublishContract.Vie
         }
         path = vFile.getPath();
         openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
-        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+        openCameraIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+            List<ResolveInfo> resInfoList = getPackageManager().queryIntentActivities(
+                    openCameraIntent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                grantUriPermission(packageName, cameraUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            }
+        }
+        if (openCameraIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(openCameraIntent, TAKE_PICTURE);
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -199,7 +215,7 @@ public class PublishActivity extends BaseActivity implements PublishContract.Vie
 
     @Override
     public void showToast(String result) {
-        Toast.makeText(this.getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -216,6 +232,7 @@ public class PublishActivity extends BaseActivity implements PublishContract.Vie
 
     @Override
     public void gotoMainActivity() {
+        setResult(RESULT_OK);
         finish();
     }
 

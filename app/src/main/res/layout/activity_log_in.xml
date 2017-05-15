@@ -67,6 +67,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="40dp"
                 android:background="#ffffff"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:hint="@string/login_password"
                 android:inputType="textPassword"
                 android:maxLength="20"

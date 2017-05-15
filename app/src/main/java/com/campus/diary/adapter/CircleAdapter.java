@@ -15,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.campus.diary.R;
 import com.campus.diary.activity.ImagePagerActivity;
 import com.campus.diary.activity.MineActivity;
-import com.campus.diary.activity.SignInActivity;
+import com.campus.diary.activity.LogInActivity;
 import com.campus.diary.model.ActionItem;
 import com.campus.diary.model.CircleItem;
 import com.campus.diary.model.CommentConfig;
@@ -101,13 +101,14 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                             .into(holder.headBtn);
                 }
             } else {
+                holder.headNickname.setText(R.string.please_login);
                 holder.headBtn.setImageResource(R.drawable.default_account_icon);
             }
             holder.headBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (user == null || user.isAnonymous()) {
-                        context.startActivity(new Intent(context, SignInActivity.class));
+                        context.startActivity(new Intent(context, LogInActivity.class));
                     } else {
                         context.startActivity(new Intent(context, MineActivity.class));
                     }
@@ -259,17 +260,20 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                 case CircleViewHolder.TYPE_IMAGE:// 处理图片
                     if (holder instanceof ImageViewHolder) {
                         final List<DroiFile> photos = circleItem.getPhotos();
+                        final List<String> photoUrls = new ArrayList<>();
                         if (photos != null && photos.size() > 0) {
+                            for (DroiFile droiFile : photos) {
+                                if (droiFile.hasUri()) {
+
+                                }
+                                photoUrls.add(droiFile.getUri().toString());
+                            }
                             ((ImageViewHolder) holder).multiImageView.setVisibility(View.VISIBLE);
-                            ((ImageViewHolder) holder).multiImageView.setList(photos);
+                            ((ImageViewHolder) holder).multiImageView.setList(photoUrls);
                             ((ImageViewHolder) holder).multiImageView.setOnItemClickListener(new MultiImageView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(View view, int position) {
                                     ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(view.getMeasuredWidth(), view.getMeasuredHeight());
-                                    List<String> photoUrls = new ArrayList<>();
-                                    for (DroiFile photo : photos) {
-                                        photoUrls.add(photo.getUri().toString());
-                                    }
                                     ImagePagerActivity.startImagePagerActivity(context, photoUrls, position, imageSize);
                                 }
                             });
@@ -327,7 +331,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                     User user = DroiUser.getCurrentUser(User.class);
                     // 如果用户是合法的且是匿名用户
                     if (user == null || user.isAnonymous()) {
-                        context.startActivity(new Intent(context, SignInActivity.class));
+                        context.startActivity(new Intent(context, LogInActivity.class));
                         return;
                     }
                     mLastTime = System.currentTimeMillis();
@@ -345,7 +349,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                         User myUser = DroiUser.getCurrentUser(User.class);
                         // 如果用户是合法的且是匿名用户
                         if (myUser == null || myUser.isAnonymous()) {
-                            context.startActivity(new Intent(context, SignInActivity.class));
+                            context.startActivity(new Intent(context, LogInActivity.class));
                             return;
                         }
                         DroiAnalytics.onEvent(context, "Comment");

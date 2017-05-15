@@ -16,7 +16,6 @@ import com.campus.diary.R;
 import com.campus.diary.model.User;
 
 public class MineActivity extends BaseActivity implements View.OnClickListener {
-    public static final int REQUEST_LOGIN = 1001;
 
     private ImageView mUserAvatar;
     private TextView mUserName;
@@ -25,6 +24,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
     private View mUpdateItem;
     private View mFeedBackItem;
     private View mAboutItem;
+    public static final int REQUEST_LOGIN = 1002;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void showLogin() {
-        Intent intent = new Intent(this, SignInActivity.class);
+        Intent intent = new Intent(this, LogInActivity.class);
         startActivityForResult(intent, REQUEST_LOGIN);
     }
 

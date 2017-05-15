@@ -102,7 +102,7 @@ public class ImageChooseActivity extends BaseActivity {
                     if (selectedImgs.size() >= availableSize) {
                         String maxChoose = String.format(getString(R.string.max_choose),
                                 availableSize);
-                        Toast.makeText(ImageChooseActivity.this.getApplicationContext(),
+                        Toast.makeText(getApplicationContext(),
                                 maxChoose, Toast.LENGTH_SHORT).show();
                         return;
                     }

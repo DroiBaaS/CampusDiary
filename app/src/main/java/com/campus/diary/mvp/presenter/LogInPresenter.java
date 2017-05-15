@@ -6,7 +6,7 @@ import com.campus.diary.R;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiUser;
 import com.campus.diary.model.User;
-import com.campus.diary.mvp.contract.SignInContract;
+import com.campus.diary.mvp.contract.LogInContract;
 
 import rx.Observable;
 import rx.Observer;
@@ -14,12 +14,12 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class LogInPresenter implements SignInContract.Presenter {
+public class LogInPresenter implements LogInContract.Presenter {
 
     private final static String TAG = "LogInPresenter";
-    private SignInContract.View view;
+    private LogInContract.View view;
 
-    public LogInPresenter(SignInContract.View view) {
+    public LogInPresenter(LogInContract.View view) {
         this.view = view;
     }
 
@@ -59,7 +59,9 @@ public class LogInPresenter implements SignInContract.Presenter {
                             view.showToast(view.getResString(R.string.login_success));
                             view.gotoMainActivity();
                         } else {
-                            if (droiError.getCode() == DroiError.USER_PASSWORD_INCORRECT) {
+                            if (droiError.getCode() == DroiError.USER_NOT_EXISTS) {
+                                view.showToast(view.getResString(R.string.user_not_exist));
+                            } else if (droiError.getCode() == DroiError.USER_PASSWORD_INCORRECT) {
                                 view.showToast(view.getResString(R.string.wrong_password));
                             } else {
                                 Log.i(TAG, "error:" + droiError);
