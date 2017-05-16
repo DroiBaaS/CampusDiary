@@ -38,17 +38,17 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     public void addTitle(int titleId) {
-        back_button = (ImageView) findViewById(R.id.back_botton);
+        back_button = (ImageView) findViewById(R.id.back_button);
         title_tv = (TextView) findViewById(R.id.title_tv);
         title_tv.setText(titleId);
-        right_button = (Button) findViewById(R.id.right_botton);
+        right_button = (Button) findViewById(R.id.right_button);
     }
 
     public void addTitle(String titleStr) {
-        back_button = (ImageView) findViewById(R.id.back_botton);
+        back_button = (ImageView) findViewById(R.id.back_button);
         title_tv = (TextView) findViewById(R.id.title_tv);
         title_tv.setText(titleStr);
-        right_button = (Button) findViewById(R.id.right_botton);
+        right_button = (Button) findViewById(R.id.right_button);
     }
 
     public void setBackButton() {
