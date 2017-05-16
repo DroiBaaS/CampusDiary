@@ -107,18 +107,23 @@ public class SignUpPresenter implements SignUpContract.Presenter {
             checkResult = view.getResString(R.string.username_empty);
         } else if (inputInfo.length() < 6) {
             checkResult = view.getResString(R.string.username_too_short);
-        } else if (inputInfo.length() > 30) {
+        } else if (inputInfo.length() > 20) {
             checkResult = view.getResString(R.string.username_too_long);
         } else if (userInfoMap.get("mUserPassword1").toString().length() < 6) {
             checkResult = view.getResString(R.string.password_too_short);
-        } else if (userInfoMap.get("mUserPassword1").toString().length() > 30) {
+        } else if (userInfoMap.get("mUserPassword1").toString().length() > 20) {
             checkResult = view.getResString(R.string.password_too_long);
         } else if (!userInfoMap.get("mUserPassword1").toString()
                 .equals(userInfoMap.get("mUserPassword2").toString())) {
             checkResult = view.getResString(R.string.wrong_two_password);
         } else if (userInfoMap.get("mNickName").toString().trim().length() == 0) {
             checkResult = view.getResString(R.string.nick_name_empty);
+        } else if (userInfoMap.get("mNickName").toString().trim().length() < 6) {
+            checkResult = view.getResString(R.string.nick_too_short);
+        } else if (userInfoMap.get("mNickName").toString().trim().length() > 20) {
+            checkResult = view.getResString(R.string.nick_too_long);
         }
+
         if (checkResult != null) {
             if (view == null) {
                 return false;

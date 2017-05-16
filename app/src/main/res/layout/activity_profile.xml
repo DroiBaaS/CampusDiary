@@ -76,6 +76,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/user_text"
+                android:gravity="right"
                 android:text="@string/click_login"
                 android:textSize="20sp" />
 
@@ -136,6 +138,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/nick_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nick_name"
@@ -147,6 +150,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/nick_name_text"
+                android:gravity="right"
                 android:text="@string/click_login"
                 android:textSize="20sp" />
 

@@ -72,6 +72,8 @@
     <string name="logining">正在登录…</string>
     <string name="password_too_long">密码太长</string>
     <string name="nick_name_empty">昵称不能为空</string>
+    <string name="nick_too_short">昵称不能小于6个字符</string>
+    <string name="nick_too_long">昵称太长</string>
     <string name="username_empty">用户名不能为空</string>
     <string name="username_too_long">用户名太长</string>
     <string name="signuping">正在注册…</string>

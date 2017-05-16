@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,8 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                             .load(user.getHeadIcon().getUri())
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(holder.headBtn);
+                } else {
+                    holder.headBtn.setImageResource(R.drawable.default_account_icon);
                 }
             } else {
                 holder.headNickname.setText(R.string.please_login);
@@ -197,7 +200,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                                         return;
                                     }
                                     CommentConfig config = new CommentConfig();
-                                    config.circleId = commentItem.getObjectId();
+                                    config.circleId = circleItem.getObjectId();
                                     config.circlePosition = circlePosition;
                                     config.commentPosition = commentPosition;
                                     config.commentType = CommentConfig.Type.REPLY;
