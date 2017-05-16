@@ -121,7 +121,6 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
         if (presenter != null) {
             presenter.recycle();
         }
-
         super.onDestroy();
     }
 
@@ -173,7 +172,7 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
                 if (presenter != null) {
                     String content = editText.getText().toString().trim();
                     if (TextUtils.isEmpty(content)) {
-                        Toast.makeText(getApplicationContext(), "评论内容不能为空...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.comment_not_empty, Toast.LENGTH_SHORT).show();
                         return;
                     }
                     presenter.addComment(content, commentConfig);
@@ -209,21 +208,21 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
             public void onGlobalLayout() {
                 Rect r = new Rect();
                 bodyLayout.getWindowVisibleDisplayFrame(r);
-                int statusBarH = getStatusBarHeight();//状态栏高度
+                int statusBarH = getStatusBarHeight();
                 int screenH = bodyLayout.getRootView().getHeight();
                 if (r.top != statusBarH) {
                     r.top = statusBarH;
                 }
                 int keyboardH = screenH - (r.bottom - r.top);
-                if (keyboardH == currentKeyboardH) {//有变化时才处理，否则会陷入死循环
+                if (keyboardH == currentKeyboardH) {
                     return;
                 }
                 currentKeyboardH = keyboardH;
-                screenHeight = screenH;//应用屏幕的高度
+                screenHeight = screenH;
                 editTextBodyHeight = editTextBody.getHeight();
                 RelativeLayout titleBar = (RelativeLayout) findViewById(R.id.title_bar);
                 titleHeight = titleBar.getHeight();
-                if (keyboardH < 150) {//说明是隐藏键盘的情况
+                if (keyboardH < 150) {
                     updateEditTextBodyVisible(View.GONE, null);
                     return;
                 }
@@ -234,11 +233,6 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
         });
     }
 
-    /**
-     * 获取状态栏高度
-     *
-     * @return
-     */
     private int getStatusBarHeight() {
         int result = 0;
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -247,7 +241,6 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
         }
         return result;
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -286,11 +279,11 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
     }
 
     @Override
-    public void update2DeleteFavor(int circlePosition, String favortId) {
+    public void update2DeleteFavor(int circlePosition, String favorId) {
         CircleItem item = (CircleItem) circleAdapter.getDatas().get(circlePosition);
         List<FavorItem> items = item.getFavorList();
         for (int i = 0; i < items.size(); i++) {
-            if (favortId.equals(items.get(i).getObjectId())) {
+            if (favorId.equals(items.get(i).getObjectId())) {
                 items.remove(i);
                 circleAdapter.notifyDataSetChanged();
                 return;
@@ -369,12 +362,6 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
         }
     }
 
-    /**
-     * 测量偏移量
-     *
-     * @param commentConfig
-     * @return
-     */
     private int getListViewOffset(CommentConfig commentConfig) {
         if (commentConfig == null)
             return 0;
@@ -394,13 +381,10 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
             selectCircleItemH = selectCircleItem.getHeight();
         }
         if (commentConfig.commentType == CommentConfig.Type.REPLY) {
-            //回复评论的情况
             CommentListView commentLv = (CommentListView) selectCircleItem.findViewById(R.id.commentList);
             if (commentLv != null) {
-                //找到要回复的评论view,计算出该view距离所属动态底部的距离
                 View selectCommentItem = commentLv.getChildAt(commentConfig.commentPosition);
                 if (selectCommentItem != null) {
-                    //选择的commentItem距选择的CircleItem底部的距离
                     selectCommentItemOffset = 0;
                     View parentView = selectCommentItem;
                     do {
@@ -414,7 +398,6 @@ public class MainActivity extends BaseActivity implements CircleContract.View {
             }
         }
     }
-
 
     @Override
     public void showLoading(String msg) {

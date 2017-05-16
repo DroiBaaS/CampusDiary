@@ -88,5 +88,6 @@
     <string name="user_not_exist">该用户不存在</string>
     <string name="please_login">请登录</string>
     <string name="send_failed">发送失败！</string>
+    <string name="comment_not_empty">评论内容不能为空…</string>
 
 </resources>
