@@ -30,8 +30,8 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(CircleParameter.class);
         DroiObject.registerCustomClass(CircleDeleteParameter.class);
         DroiFeedback.initialize(this);
-        DroiUpdate.initialize(this);
+        DroiUpdate.initialize(this, "LGjbho67XpofRw7Pjc3r8YO_xfXzhjhHJFDvq9SKyl4vE25N_GYFPjMclYF_N3eY");
         DroiAnalytics.initialize(this);
-        DroiPush.initialize(this);
+        DroiPush.initialize(this, "QJYciJT3vPpJyxexAhJuF8w0WROOJ7JuZjZe3mQRsQQaSLjQyEWlED9mTThKw9Xk");
     }
 }

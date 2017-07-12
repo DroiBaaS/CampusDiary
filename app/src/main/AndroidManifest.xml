@@ -22,9 +22,6 @@
 
         <!-- app info start -->
         <meta-data
-            android:name="com.droi.sdk.secret_key"
-            android:value="nbisk91n" />
-        <meta-data
             android:name="com.droi.sdk.application_id"
             android:value="xtfvmbzhpjG0i8uXVuGZ83JdihD2hqiClQD1LpgQ" />
         <meta-data

@@ -7,6 +7,7 @@ android {
         applicationId "com.campus.diary"
         minSdkVersion 16
         targetSdkVersion 25
+        manifestPlaceholders = [DROI_PUSH_APPID: 'xtfvmbzhpjG0i8uXVuGZ83JdihD2hqiClQD1LpgQ']
     }
 
     buildTypes {
