@@ -55,6 +55,7 @@
     <string name="loading">正在加载…</string>
     <string name="content">内容</string>
     <string name="delete_failed">删除数据失败，请重试！</string>
+    <string name="delete_already">该条已删除</string>
     <string name="changing">修改中…</string>
     <string name="error">发生错误！</string>
     <string name="change_success">修改成功！</string>

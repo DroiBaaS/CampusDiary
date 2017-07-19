@@ -82,7 +82,7 @@ public class CirclePresenter implements CircleContract.Presenter {
         deleteCircleData(circleId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Boolean>() {
+                .subscribe(new Observer<Integer>() {
                     @Override
                     public void onCompleted() {
                         if (view == null) {
@@ -102,13 +102,16 @@ public class CirclePresenter implements CircleContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(Boolean result) {
+                    public void onNext(Integer result) {
                         if (view == null) {
                             return;
                         }
-                        if (result) {
+                        if (result == 0) {
                             view.update2DeleteCircle(circleId);
-                        } else {
+                        } else if(result == 1000){
+                            view.showToast(view.getResString(R.string.delete_already));
+                        }
+                        else{
                             view.showToast(view.getResString(R.string.delete_failed));
                         }
                     }
@@ -309,22 +312,20 @@ public class CirclePresenter implements CircleContract.Presenter {
         });
     }
 
-    private static Observable<Boolean> deleteCircleData(final String id) {
-        return Observable.create(new Observable.OnSubscribe<Boolean>() {
+    private static Observable<Integer> deleteCircleData(final String id) {
+        return Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
-            public void call(final Subscriber<? super Boolean> subscriber) {
+            public void call(Subscriber<? super Integer> subscriber) {
                 try {
                     DroiError droiError = new DroiError();
                     CircleDeleteParameter parameter = new CircleDeleteParameter();
                     parameter.circleId = id;
                     CircleResult result = DroiCloud.callRestApi(API_KEY, "/api/v2/removeCircle",
                             DroiCloud.Method.POST, parameter, CircleResult.class, droiError);
-                    if (droiError.isOk() && result.code == 0) {
-                        subscriber.onNext(true);
-                    } else if (!droiError.isOk()) {
-                        subscriber.onError(new Exception(droiError.toString()));
+                    if (droiError.isOk()) {
+                        subscriber.onNext(result.code);
                     } else {
-                        subscriber.onNext(false);
+                        subscriber.onError(new Exception(droiError.toString()));
                     }
                 } catch (Exception e) {
                     subscriber.onError(e);
