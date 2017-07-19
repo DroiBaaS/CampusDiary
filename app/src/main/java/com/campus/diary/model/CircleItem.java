@@ -133,28 +133,6 @@ public class CircleItem extends DroiObject {
         this.photos = photos;
     }
 
-    public <T extends DroiObject> List<DroiReferenceObject> objs2ref(List<T> objs) {
-        List<DroiReferenceObject> casts = new ArrayList();
-        if (objs != null) {
-            for (T obj : objs) {
-                DroiReferenceObject ref = new DroiReferenceObject();
-                ref.setDroiObject(obj);
-                casts.add(ref);
-            }
-        }
-        return casts;
-    }
-
-    public <T extends DroiObject> List<T> ref2objs(List<DroiReferenceObject> refs) {
-        List<T> casts = new ArrayList();
-        if (refs != null) {
-            for (DroiReferenceObject ref : refs) {
-                casts.add((T) ref.droiObject());
-            }
-        }
-        return casts;
-    }
-
     public int getFavorCount() {
         return favorCount;
     }
