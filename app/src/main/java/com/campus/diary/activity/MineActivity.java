@@ -57,6 +57,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener {
             if (user.getHeadIcon() != null) {
                 Glide.with(this)
                         .load(user.getHeadIcon().getUri())
+                        .thumbnail(0.5f)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(mUserAvatar);
             } else {

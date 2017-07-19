@@ -128,6 +128,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
             if (user.getHeadIcon() != null) {
                 Glide.with(this)
                         .load(user.getHeadIcon().getUri())
+                        .thumbnail(0.5f)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(headImageView);
             }

@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.campus.diary.R;
 import com.campus.diary.utils.DensityUtil;
-import com.droi.sdk.core.DroiFile;
 
 import java.util.List;
 
@@ -168,6 +167,7 @@ public class MultiImageView extends LinearLayout {
         imageView.setBackgroundColor(getResources().getColor(R.color.im_font_color_text_hint));
         Glide.with(getContext())
                 .load(photoInfo)
+                .thumbnail(0.1f)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
         return imageView;

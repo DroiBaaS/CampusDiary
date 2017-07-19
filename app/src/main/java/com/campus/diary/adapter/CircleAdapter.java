@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +97,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                 if (user.getHeadIcon() != null) {
                     Glide.with(context)
                             .load(user.getHeadIcon().getUri())
+                            .thumbnail(0.5f)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(holder.headBtn);
                 } else {
@@ -132,6 +132,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
             if (circleItem.getUser().getHeadIcon() != null) {
                 Glide.with(context)
                         .load(circleItem.getUser().getHeadIcon().getUri())
+                        .thumbnail(0.2f)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.color.bg_no_photo)
                         .transform(new GlideCircleTransform(context))
@@ -253,6 +254,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                         String linkTitle = circleItem.getLinkTitle();
                         Glide.with(context)
                                 .load(linkImg)
+                                .thumbnail(0.1f)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .into(((URLViewHolder) holder).urlImageIv);
                         ((URLViewHolder) holder).urlContentTv.setText(linkTitle);
@@ -267,9 +269,8 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                         if (photos != null && photos.size() > 0) {
                             for (DroiFile droiFile : photos) {
                                 if (droiFile.hasUri()) {
-
+                                    photoUrls.add(droiFile.getUri().toString());
                                 }
-                                photoUrls.add(droiFile.getUri().toString());
                             }
                             ((ImageViewHolder) holder).multiImageView.setVisibility(View.VISIBLE);
                             ((ImageViewHolder) holder).multiImageView.setList(photoUrls);

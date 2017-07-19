@@ -17,8 +17,4 @@ public class CircleResult extends DroiObject {
     public List<CircleItem> getCircles() {
         return data;
     }
-
-    public void setCircles(List<CircleItem> data) {
-        this.data = data;
-    }
 }

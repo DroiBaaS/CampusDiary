@@ -6,9 +6,7 @@ import com.droi.sdk.core.DroiExpose;
 import com.droi.sdk.core.DroiFile;
 import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiReference;
-import com.droi.sdk.core.DroiReferenceObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CircleItem extends DroiObject {
@@ -23,16 +21,14 @@ public class CircleItem extends DroiObject {
     private String linkImg;
     @DroiExpose
     private String linkTitle;
-    @DroiExpose
+    @DroiReference
     private List<DroiFile> photos;
     @DroiReference
     private User user;
-    @DroiExpose
+    @DroiReference
     private List<CommentItem> commentList;
-    @DroiExpose
+    @DroiReference
     private List<FavorItem> favorList;
-    @DroiExpose
-    private int favorCount;
 
     private boolean isExpand;
 
@@ -133,11 +129,4 @@ public class CircleItem extends DroiObject {
         this.photos = photos;
     }
 
-    public int getFavorCount() {
-        return favorCount;
-    }
-
-    public void setFavorCount(int favorCount) {
-        this.favorCount = favorCount;
-    }
 }
