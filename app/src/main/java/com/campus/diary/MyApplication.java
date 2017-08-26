@@ -9,6 +9,7 @@ import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.Core;
 import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.feedback.DroiFeedback;
+import com.droi.sdk.feedback.GlideEngine;
 import com.droi.sdk.push.DroiPush;
 import com.droi.sdk.selfupdate.DroiUpdate;
 import com.campus.diary.model.CircleItem;
@@ -29,7 +30,8 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(CircleResult.class);
         DroiObject.registerCustomClass(CircleParameter.class);
         DroiObject.registerCustomClass(CircleDeleteParameter.class);
-        DroiFeedback.initialize(this);
+        DroiFeedback.initialize(this, "KBKd3lpUMlVdw9qCdNXUB9KN97QxQ5GdP54XIVPCUQrvuTgxVnyIdTWU6YM09OAS");
+        DroiFeedback.setImageEngine(new GlideEngine());
         DroiUpdate.initialize(this, "LGjbho67XpofRw7Pjc3r8YO_xfXzhjhHJFDvq9SKyl4vE25N_GYFPjMclYF_N3eY");
         DroiAnalytics.initialize(this);
         DroiPush.initialize(this, "QJYciJT3vPpJyxexAhJuF8w0WROOJ7JuZjZe3mQRsQQaSLjQyEWlED9mTThKw9Xk");
