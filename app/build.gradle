@@ -64,4 +64,5 @@ dependencies {
     compile 'com.droi.sdk:feedback:+'
     compile 'com.droi.sdk:selfupdate:+'
     compile 'com.droi.sdk:analytics:+'
+	compile 'org.lz4:lz4-java:1.4.0'
 }
